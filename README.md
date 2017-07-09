@@ -1,31 +1,22 @@
-# App Metrics Health <img src="http://app-metrics.io/logo.png" alt="App Metrics" width="50px"/> 
+# App Metrics AspNetCore Health <img src="http://app-metrics.io/logo.png" alt="App Metrics" width="50px"/> 
 [![Official Site](https://img.shields.io/badge/site-appmetrics-blue.svg?style=flat-square)](http://app-metrics.io/getting-started/intro.html) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square)](https://opensource.org/licenses/Apache-2.0) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/app-metrics/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-## What is App Metrics Health?
+## What is App Metrics AspNetCore Health?
 
-App Metrics Health is an open-source and cross-platform .NET library used define health checks within an application, see the [Getting Started Guide](http://app-metrics.io/getting-started/health-checks/index.html).
+[App Metrics Health](https://github.com/AppMetrics/Health) is an open-source and cross-platform .NET library used define health checks within an application, see the [Getting Started Guide](http://app-metrics.io/getting-started/health-checks/index.html). This repository includes AspNetCore middleware and extensions to expose user-defined health checks over HTTP.
 
 ## Latest Builds, Packages & Repo Stats
 
 |Branch|AppVeyor|Travis|Coverage|
 |------|:--------:|:--------:|:--------:|
-|dev|[![AppVeyor](https://img.shields.io/appveyor/ci/alhardy/health/dev.svg?style=flat-square&label=appveyor%20build)](https://ci.appveyor.com/project/alhardy/health/branch/dev)|[![Travis](https://img.shields.io/travis/alhardy/health/dev.svg?style=flat-square&label=travis%20build)](https://travis-ci.org/alhardy/health)|[![Coveralls](https://img.shields.io/coveralls/AppMetrics/Health/dev.svg?style=flat-square)](https://coveralls.io/github/AppMetrics/Health?branch=dev)
-|master|[![AppVeyor](https://img.shields.io/appveyor/ci/alhardy/health/master.svg?style=flat-square&label=appveyor%20build)](https://ci.appveyor.com/project/alhardy/health/branch/master)| [![Travis](https://img.shields.io/travis/alhardy/health/master.svg?style=flat-square&label=travis%20build)](https://travis-ci.org/alhardy/health)| [![Coveralls](https://img.shields.io/coveralls/AppMetrics/Health/master.svg?style=flat-square)](https://coveralls.io/github/AppMetrics/Health?branch=master)|
-
-|Package|Dev Release|Pre-Release|Release|
-|------|:--------:|:--------:|:--------:|
-|App.Metrics.Health|[![MyGet Status](https://img.shields.io/myget/appmetrics/v/App.Metrics.Health.svg?style=flat-square)](https://www.myget.org/feed/appmetrics/package/nuget/App.Metrics.Health)|[![NuGet Status](https://img.shields.io/nuget/vpre/App.Metrics.Health.svg?style=flat-square)](https://www.nuget.org/packages/App.Metrics.Health/)|[![NuGet Status](https://img.shields.io/nuget/v/App.Metrics.Health.svg?style=flat-square)](https://www.nuget.org/packages/App.Metrics.Health/)
-|App.Metrics.Health.Abstractions|[![MyGet Status](https://img.shields.io/myget/appmetrics/v/App.Metrics.Health.Abstractions.svg?style=flat-square0)](https://www.myget.org/feed/appmetrics/package/nuget/App.Metrics.Health.Abstractions)|[![NuGet Status](https://img.shields.io/nuget/vpre/App.Metrics.Health.Abstractions.svg?style=flat-square)](https://www.nuget.org/packages/App.Metrics.Health.Abstractions/)|[![NuGet Status](https://img.shields.io/nuget/v/App.Metrics.Health.Abstractions.svg?style=flat-square)](https://www.nuget.org/packages/App.Metrics.Health.Abstractions/)
-|App.Metrics.Health.Formatters.Ascii|[![MyGet Status](https://img.shields.io/myget/appmetrics/v/App.Metrics.Health.Formatters.Ascii.svg?style=flat-square&maxAge=7200)](https://www.myget.org/feed/appmetrics/package/nuget/App.Metrics.Health.Formatters.Ascii)|[![NuGet Status](https://img.shields.io/nuget/vpre/App.Metrics.Health.Formatters.Ascii.svg?style=flat-square)](https://www.nuget.org/packages/App.Metrics.Health.Formatters.Ascii/)|[![NuGet Status](https://img.shields.io/nuget/v/App.Metrics.Health.Formatters.Ascii.svg)](https://www.nuget.org/packages/App.Metrics.Health.Formatters.Ascii/)
-|App.Metrics.Health.Formatters.Json|[![MyGet Status](https://img.shields.io/myget/appmetrics/v/App.Metrics.Health.Formatters.Json.svg?style=flat-square)](https://www.myget.org/feed/appmetrics/package/nuget/App.Metrics.Health.Formatters.Json)|[![NuGet Status](https://img.shields.io/nuget/vpre/App.Metrics.Health.Formatters.Json.svg?style=flat-square)](https://www.nuget.org/packages/App.Metrics.Health.Formatters.Json/)|[![NuGet Status](https://img.shields.io/nuget/v/App.Metrics.Health.Formatters.Json.svg?style=flat-square)](https://www.nuget.org/packages/App.Metrics.Health.Formatters.Json/)|
-
-### AspNet Core
+|dev|[![AppVeyor](https://img.shields.io/appveyor/ci/alhardy/aspnetcorehealth/dev.svg?style=flat-square&label=appveyor%20build)](https://ci.appveyor.com/project/alhardy/aspnetcorehealth/branch/dev)|[![Travis](https://img.shields.io/travis/alhardy/health/dev.svg?style=flat-square&label=travis%20build)](https://travis-ci.org/alhardy/aspnetcorehealth)|[![Coveralls](https://img.shields.io/coveralls/AppMetrics/AspNetCoreHealth/dev.svg?style=flat-square)](https://coveralls.io/github/AppMetrics/AspNetCoreHealth?branch=dev)
+|master|[![AppVeyor](https://img.shields.io/appveyor/ci/alhardy/health/master.svg?style=flat-square&label=appveyor%20build)](https://ci.appveyor.com/project/alhardy/aspnetcorehealth/branch/master)| [![Travis](https://img.shields.io/travis/alhardy/health/master.svg?style=flat-square&label=travis%20build)](https://travis-ci.org/alhardy/aspnetcorehealth)| [![Coveralls](https://img.shields.io/coveralls/AppMetrics/AspNetCoreHealth/master.svg?style=flat-square)](https://coveralls.io/github/AppMetrics/AspNetCoreHealth?branch=master)|
 
 |Package|Dev Release|Pre-Release|Release|
 |------|:--------:|:--------:|:--------:|
 |App.Metrics.AspNetCore.Health|[![MyGet Status](https://img.shields.io/myget/appmetrics/v/App.Metrics.AspNetCore.Health.svg?style=flat-square)](https://www.myget.org/feed/appmetrics/package/nuget/App.Metrics.AspNetCore.Health)|[![NuGet Status](https://img.shields.io/nuget/vpre/App.Metrics.AspNetCore.Health.svg?style=flat-square)](https://www.nuget.org/packages/App.Metrics.AspNetCore.Health/)|[![NuGet Status](https://img.shields.io/nuget/v/App.Metrics.AspNetCore.Health.svg?style=flat-square)](https://www.nuget.org/packages/App.Metrics.AspNetCore.Health/)
-|App.Metrics.AspNetCore.Health.Formatters.Ascii|[![MyGet Status](https://img.shields.io/myget/appmetrics/v/App.Metrics.AspNetCore.Health.Formatters.Ascii.svg?style=flat-square)](https://www.myget.org/feed/appmetrics/package/nuget/App.Metrics.AspNetCore.Health.Formatters.Ascii)|[![NuGet Status](https://img.shields.io/nuget/vpre/App.Metrics.AspNetCore.Health.Formatters.Ascii.svg?style=flat-square)](https://www.nuget.org/packages/App.Metrics.AspNetCore.Health.Formatters.Ascii/)|[![NuGet Status](https://img.shields.io/nuget/v/App.Metrics.AspNetCore.Health.Formatters.Ascii.svg?style=flat-square)](https://www.nuget.org/packages/App.Metrics.AspNetCore.Health.Formatters.Ascii/)
-|App.Metrics.AspNetCore.Health.Formatters.Json|[![MyGet Status](https://img.shields.io/myget/appmetrics/v/App.Metrics.AspNetCore.Health.Formatters.Json.svg?style=flat-square)](https://www.myget.org/feed/appmetrics/package/nuget/App.Metrics.AspNetCore.Health.Formatters.Json)|[![NuGet Status](https://img.shields.io/nuget/vpre/App.Metrics.AspNetCore.Health.Formatters.Json.svg?style=flat-square)](https://www.nuget.org/packages/App.Metrics.AspNetCore.Health.Formatters.Json/)|[![NuGet Status](https://img.shields.io/nuget/v/App.Metrics.AspNetCore.Health.Formatters.Json.svg?style=flat-square)](https://www.nuget.org/packages/App.Metrics.AspNetCore.Health.Formatters.Json/)
+|App.Metrics.AspNetCore.Health.Formatters.Ascii|[![MyGet Status](https://img.shields.io/myget/appmetrics/v/App.Metrics.AspNetCore.Health.Formatters.Ascii.svg?style=flat-square0)](https://www.myget.org/feed/appmetrics/package/nuget/App.Metrics.AspNetCore.Health.Formatters.Ascii)|[![NuGet Status](https://img.shields.io/nuget/vpre/App.Metrics.AspNetCore.Health.Formatters.Ascii.svg?style=flat-square)](https://www.nuget.org/packages/App.Metrics.AspNetCore.Health.Formatters.Ascii/)|[![NuGet Status](https://img.shields.io/nuget/v/App.Metrics.AspNetCore.Health.Formatters.Ascii.svg?style=flat-square)](https://www.nuget.org/packages/App.Metrics.AspNetCore.Health.Formatters.Ascii/)
+|App.Metrics.AspNetCore.Health.Formatters.Json|[![MyGet Status](https://img.shields.io/myget/appmetrics/v/App.Metrics.Health.Formatters.Ascii.svg?style=flat-square&maxAge=7200)](https://www.myget.org/feed/appmetrics/package/nuget/App.Metrics.AspNetCore.Health.Formatters.Json)|[![NuGet Status](https://img.shields.io/nuget/vpre/App.Metrics.Health.Formatters.Ascii.svg?style=flat-square)](https://www.nuget.org/packages/App.Metrics.AspNetCore.Health.Formatters.Json/)|[![NuGet Status](https://img.shields.io/nuget/v/App.Metrics.AspNetCore.Health.Formatters.Json.svg)](https://www.nuget.org/packages/App.Metrics.AspNetCore.Health.Formatters.Json/)|
 
 ----------
 
@@ -101,16 +92,6 @@ See the [contribution guidlines](CONTRIBUTING.md) for details.
 This library is release under Apache 2.0 License ( see LICENSE ) Copyright (c) 2016 Allan Hardy
 
 See [LICENSE](https://github.com/alhardy/AppMetrics/blob/dev/LICENSE)
-
-----------
-
-App Metrics is based on the [Metrics.NET](https://github.com/etishor/Metrics.NET) library, and at the moment uses the same reservoir sampling code from the original library which is a port of the Java [Dropwizard Metrics](https://github.com/dropwizard/metrics) library. 
-
-*Metrics.NET Licensed under these terms*:
-"Metrics.NET is release under Apache 2.0 License Copyright (c) 2014 Iulian Margarintescu" see [LICENSE](https://github.com/etishor/Metrics.NET/blob/master/LICENSE)
-
-*Dropwizard Metrics* Licensed under these terms*:
-"Copyright (c) 2010-2013 Coda Hale, Yammer.com Published under Apache Software License 2.0, see [LICENSE](https://github.com/dropwizard/metrics/blob/3.2-development/LICENSE)"
 
 ----------
 [![Powered By NDepend](https://github.com/alhardy/AppMetrics.DocFx/blob/master/images/PoweredByNDepend.png)](http://www.ndepend.com/)

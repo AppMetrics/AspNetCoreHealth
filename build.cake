@@ -35,10 +35,6 @@ var skipHtmlCoverageReport		= HasArgument("SkipHtmlCoverageReport") ? Argument<b
 // DEFINE FILES & DIRECTORIES
 //////////////////////////////////////////////////////////////////////
 var packDirs                    = new [] {
-											Directory("./src/App.Metrics.Health"),
-											Directory("./src/App.Metrics.Health.Abstractions"),
-											Directory("./src/App.Metrics.Health.Formatters.Ascii"),
-											Directory("./src/App.Metrics.Health.Formatters.Json"),											
 											Directory("./src/App.Metrics.AspNetCore.Health"),
 											Directory("./src/App.Metrics.AspNetCore.Health.Formatters.Ascii"),
 											Directory("./src/App.Metrics.AspNetCore.Health.Formatters.Json")
@@ -52,10 +48,10 @@ var htmlCoverageReport			= coverageResultsDir.FullPath + "/coverage.html";
 var mergedCoverageSnapshots		= coverageResultsDir.FullPath + "/coverage.dcvr";
 var xmlCoverageReport			= coverageResultsDir.FullPath + "/coverage.xml";
 var packagesDir                 = artifactsDir.Combine("packages");
-var resharperSettings			= "./AppMetrics.sln.DotSettings";
+var resharperSettings			= "./AspNetCoreHealth.sln.DotSettings";
 var inspectCodeXml				= string.Format("{0}/inspectCode.xml", reSharperReportsDir);
 var inspectCodeHtml				= string.Format("{0}/inspectCode.html", reSharperReportsDir);
-var solutionFile				= "./Health.sln";
+var solutionFile				= "./AspNetCoreHealth.sln";
 var solution					= ParseSolution(new FilePath(solutionFile));
 
 //////////////////////////////////////////////////////////////////////

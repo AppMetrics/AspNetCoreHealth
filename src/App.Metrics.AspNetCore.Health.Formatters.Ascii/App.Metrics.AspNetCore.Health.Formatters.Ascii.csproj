@@ -11,7 +11,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\App.Metrics.AspNetCore.Health\App.Metrics.AspNetCore.Health.csproj" />
-    <ProjectReference Include="..\App.Metrics.Health.Formatters.Ascii\App.Metrics.Health.Formatters.Ascii.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="App.Metrics.Health.Formatters.Ascii" Version="$(AppMetricsHealthVersion)" />
+  </ItemGroup> 
 
 </Project>

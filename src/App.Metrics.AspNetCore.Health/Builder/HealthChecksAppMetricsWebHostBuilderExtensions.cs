@@ -3,6 +3,8 @@
 // </copyright>
 
 using System;
+using App.Metrics.Health;
+using Microsoft.Extensions.DependencyInjection;
 
 // ReSharper disable CheckNamespace
 namespace Microsoft.AspNetCore.Hosting
@@ -28,8 +30,10 @@ namespace Microsoft.AspNetCore.Hosting
 
             hostBuilder.ConfigureServices((context, services) =>
             {
+                services.Configure<AppMetricsHealthOptions>(context.Configuration.GetSection("AppMetricsHealthOptions"));
+
                 services.AddHealthCheckMiddleware(
-                        configuration: context.Configuration.GetSection("AppMetricsHealthChecks"),
+                        configuration: context.Configuration.GetSection("AppMetricsMiddlewareHealthChecksOptions"),
                         setupMiddleware: optionsBuilder => optionsBuilder.AddAsciiFormatters());
             });
 

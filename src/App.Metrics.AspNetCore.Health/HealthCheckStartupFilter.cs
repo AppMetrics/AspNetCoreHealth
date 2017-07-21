@@ -4,6 +4,7 @@
 
 using System;
 using App.Metrics.AspNetCore.Health.Options;
+using App.Metrics.Health.DependencyInjection.Internal;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,8 +20,7 @@ namespace App.Metrics.AspNetCore.Health
                 // Verify if AddHealthChecks was done before calling UseHealthChecks
                 // We use the HealthCheckMarkerService to make sure if all the services were added.
                 // AppMetricsHealthServicesHelper.ThrowIfHealthChecksNotRegistered(hostBuilder.ApplicationServices);
-                // TODO: make public in health
-                // HealthServicesHelper.ThrowIfHealthChecksNotRegistered(app.ApplicationServices);
+                HealthServicesHelper.ThrowIfHealthChecksNotRegistered(app.ApplicationServices);
 
                 var aspNetMetricsMiddlewareHealthChecksOptions = app.ApplicationServices.GetRequiredService<AppMetricsMiddlewareHealthChecksOptions>();
 

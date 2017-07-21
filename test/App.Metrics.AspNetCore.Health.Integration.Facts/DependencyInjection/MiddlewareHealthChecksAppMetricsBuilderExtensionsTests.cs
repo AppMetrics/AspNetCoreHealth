@@ -4,8 +4,8 @@
 
 using System;
 using App.Metrics.AspNetCore.Health.Options;
-using App.Metrics.Builder;
 using FluentAssertions;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
@@ -14,6 +14,13 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.DependencyInjection
 {
     public class MiddlewareHealthChecksAppMetricsBuilderExtensionsTests
     {
+        private readonly string _startupAssemblyName;
+
+        public MiddlewareHealthChecksAppMetricsBuilderExtensionsTests()
+        {
+            _startupAssemblyName = typeof(MiddlewareHealthChecksAppMetricsBuilderExtensionsTests).Assembly.GetName().Name;
+        }
+
         [Fact]
         public void Can_load_settings_from_configuration()
         {
@@ -53,11 +60,13 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.DependencyInjection
 
             var configuration = builder.Build();
 
-            var healthChecksBuilder = services.AddHealthChecks();
+#pragma warning disable CS0612
+            var healthChecksBuilder = services.AddHealth(_startupAssemblyName);
+#pragma warning restore CS0612
 
             if (setupHealthAction == null)
             {
-                healthChecksBuilder.AddHealthCheckMiddleware(
+                services.AddHealthCheckMiddleware(
                     configuration.GetSection("AspNetMetrics"),
                     optionsBuilder =>
                     {
@@ -66,7 +75,7 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.DependencyInjection
             }
             else
             {
-                healthChecksBuilder.AddHealthCheckMiddleware(
+                services.AddHealthCheckMiddleware(
                     configuration.GetSection("AspNetMetrics"),
                     setupHealthAction,
                     optionsBuilder =>

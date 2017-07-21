@@ -3,9 +3,7 @@
 // </copyright>
 
 using System;
-using App.Metrics.Builder;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,26 +15,25 @@ namespace App.Metrics.Sandbox
 
         public IConfiguration Configuration { get; }
 
-        public void Configure(IApplicationBuilder app, IApplicationLifetime lifetime)
+        public void Configure(IApplicationBuilder app)
         {
-            app.UseHealthChecks();
-
             app.UseMvc();
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddHealth(
+                checksRegistry =>
+                {
+                    checksRegistry.AddProcessPrivateMemorySizeCheck("Private Memory Size", 200);
+                    checksRegistry.AddProcessVirtualMemorySizeCheck("Virtual Memory Size", 200);
+                    checksRegistry.AddProcessPhysicalMemoryCheck("Working Set", 200);
 
-            services.
-                AddHealthChecks().
-                AddHealthCheckMiddleware(optionsBuilder => optionsBuilder.AddAsciiFormatters()).
-                AddChecks(
-                    registry =>
-                    {
-                        registry.AddPingCheck("google ping", "google.com", TimeSpan.FromSeconds(10));
-                        registry.AddHttpGetCheck("github", new Uri("https://github.com/"), TimeSpan.FromSeconds(10));
-                    });
+                    checksRegistry.AddPingCheck("google ping", "google.com", TimeSpan.FromSeconds(10));
+                    checksRegistry.AddHttpGetCheck("github", new Uri("https://github.com/"), TimeSpan.FromSeconds(10));
+                });
+
+            services.AddMvc();
         }
     }
 }

@@ -11,6 +11,7 @@ namespace App.Metrics.Sandbox
     {
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                   .UseHealth()
                    .UseStartup<Startup>()
                    .Build();
 

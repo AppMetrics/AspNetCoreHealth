@@ -3,25 +3,18 @@
   <Import Project="..\..\build\common.props" />
   
   <PropertyGroup>
-    <Description>App Metrics ASP.NET Core Health Middleware allows you to expose health check results over HTTP.</Description>
+    <Description>App Metrics ASP.NET Core Health abstractions and interfaces.</Description>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageTags>appmetrics;aspnetcore;middleware;healthchecks</PackageTags>
+    <RootNamespace>App.Metrics.AspNetCore.Health</RootNamespace>
   </PropertyGroup>
-  
-  <ItemGroup>
-    <Compile Include="..\shared\HttpContextExtensions.cs" Link="Extensions\HttpContextExtensions.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="App.Metrics.Health" Version="$(AppMetricsHealthVersion)" />
+    <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="$(AspNetCoreVersion)" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="$(AspNetCoreVersion)" />
     <PackageReference Include="Microsoft.AspNetCore.Routing" Version="$(AspNetCoreVersion)" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\App.Metrics.AspNetCore.Health.Abstractions\App.Metrics.AspNetCore.Health.Abstractions.csproj" />
-    <ProjectReference Include="..\App.Metrics.AspNetCore.Health.Formatters.Ascii\App.Metrics.AspNetCore.Health.Formatters.Ascii.csproj" />
   </ItemGroup>
 
 </Project>

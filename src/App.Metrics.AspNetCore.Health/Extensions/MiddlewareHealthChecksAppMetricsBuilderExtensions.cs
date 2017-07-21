@@ -3,8 +3,10 @@
 // </copyright>
 
 using System;
+using App.Metrics.AspNetCore.Health;
 using App.Metrics.AspNetCore.Health.Internal;
 using App.Metrics.AspNetCore.Health.Options;
+using App.Metrics.Builder;
 using App.Metrics.Health;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,64 +14,66 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 
 // ReSharper disable CheckNamespace
-namespace App.Metrics.Builder
+namespace Microsoft.AspNetCore.Hosting
     // ReSharper restore CheckNamespace
 {
     public static class MiddlewareHealthChecksAppMetricsBuilderExtensions
     {
-        public static IAppMetricsHealthChecksBuilder AddHealthCheckMiddleware(
-            this IAppMetricsHealthChecksBuilder checksBuilder,
+        public static IServiceCollection AddHealthCheckMiddleware(
+            this IServiceCollection services,
             IConfiguration configuration,
-            Action<IAppMetricsMiddlewareHealthChecksOptionsBuilder> setupMiddlewareOptionsAction)
-        {
-            checksBuilder.Services.Configure<AppMetricsMiddlewareHealthChecksOptions>(configuration);
-            return checksBuilder.AddMetricsMiddlewareHealthChecksCore(setupMiddlewareOptionsAction);
-        }
-
-        public static IAppMetricsHealthChecksBuilder AddHealthCheckMiddleware(
-            this IAppMetricsHealthChecksBuilder checksBuilder,
-            IConfiguration configuration,
-            Action<AppMetricsMiddlewareHealthChecksOptions> setupAction,
             Action<IAppMetricsMiddlewareHealthChecksOptionsBuilder> setupMiddleware)
         {
-            checksBuilder.Services.Configure<AppMetricsMiddlewareHealthChecksOptions>(configuration);
-            checksBuilder.Services.Configure(setupAction);
-            return checksBuilder.AddMetricsMiddlewareHealthChecksCore(setupMiddleware);
+            services.Configure<AppMetricsMiddlewareHealthChecksOptions>(configuration);
+            return services.AddMetricsMiddlewareHealthChecksCore(setupMiddleware);
         }
 
-        public static IAppMetricsHealthChecksBuilder AddHealthCheckMiddleware(
-            this IAppMetricsHealthChecksBuilder checksBuilder,
+        public static IServiceCollection AddHealthCheckMiddleware(
+            this IServiceCollection services,
+            IConfiguration configuration,
+            Action<AppMetricsMiddlewareHealthChecksOptions> setupOptionsAction,
+            Action<IAppMetricsMiddlewareHealthChecksOptionsBuilder> setupMiddleware)
+        {
+            services.Configure<AppMetricsMiddlewareHealthChecksOptions>(configuration);
+            services.Configure(setupOptionsAction);
+
+            return services.AddMetricsMiddlewareHealthChecksCore(setupMiddleware);
+        }
+
+        public static IServiceCollection AddHealthCheckMiddleware(
+            this IServiceCollection services,
             Action<AppMetricsMiddlewareHealthChecksOptions> setupOptionsAction,
             Action<IAppMetricsMiddlewareHealthChecksOptionsBuilder> setupMiddlewareOptionsAction)
         {
-            checksBuilder.Services.Configure(setupOptionsAction);
-            return checksBuilder.AddMetricsMiddlewareHealthChecksCore(setupMiddlewareOptionsAction);
+            services.Configure(setupOptionsAction);
+
+            return services.AddMetricsMiddlewareHealthChecksCore(setupMiddlewareOptionsAction);
         }
 
-        public static IAppMetricsHealthChecksBuilder AddHealthCheckMiddleware(
-            this IAppMetricsHealthChecksBuilder checksBuilder,
+        public static IServiceCollection AddHealthCheckMiddleware(
+            this IServiceCollection services,
             Action<IAppMetricsMiddlewareHealthChecksOptionsBuilder> setupMiddleware)
         {
-            return checksBuilder.AddMetricsMiddlewareHealthChecksCore(setupMiddleware);
+            return services.AddMetricsMiddlewareHealthChecksCore(setupMiddleware);
         }
 
-        internal static IAppMetricsMiddlewareHealthChecksOptionsBuilder AddAppMetricsMiddlewareHealthChecksBuilder(this IAppMetricsHealthChecksBuilder appMetricsHealthCheckBuilder)
+        private static IAppMetricsMiddlewareHealthChecksOptionsBuilder AddAppMetricsMiddlewareHealthChecksBuilder(this IServiceCollection services)
         {
-            return new AppMetricsMiddlewareHealthChecksOptionsBuilder(appMetricsHealthCheckBuilder);
+            return new AppMetricsMiddlewareHealthChecksOptionsBuilder(services);
         }
 
-        private static IAppMetricsHealthChecksBuilder AddMetricsMiddlewareHealthChecksCore(
-            this IAppMetricsHealthChecksBuilder checksBuilder,
+        private static IServiceCollection AddMetricsMiddlewareHealthChecksCore(
+            this IServiceCollection services,
             Action<IAppMetricsMiddlewareHealthChecksOptionsBuilder> setupMiddleware)
         {
-            setupMiddleware(checksBuilder.AddAppMetricsMiddlewareHealthChecksBuilder());
+            setupMiddleware(services.AddAppMetricsMiddlewareHealthChecksBuilder());
 
-            checksBuilder.Services.TryAddSingleton<IHealthResponseWriter, NoOpHealthStatusResponseWriter>();
+            services.TryAddSingleton(ServiceDescriptor.Transient<IHealthResponseWriter, NoOpHealthStatusResponseWriter>());
+            services.TryAddSingleton<AppMetricsMiddlewareHealthChecksMarkerService, AppMetricsMiddlewareHealthChecksMarkerService>();
+            services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<AppMetricsMiddlewareHealthChecksOptions>>().Value);
+            services.AddSingleton<IStartupFilter>(new HealthCheckStartupFilter());
 
-            checksBuilder.Services.TryAddSingleton<AppMetricsMiddlewareHealthChecksMarkerService, AppMetricsMiddlewareHealthChecksMarkerService>();
-            checksBuilder.Services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<AppMetricsMiddlewareHealthChecksOptions>>().Value);
-
-            return checksBuilder;
+            return services;
         }
     }
 }

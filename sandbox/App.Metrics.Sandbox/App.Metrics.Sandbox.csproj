@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\App.Metrics.AspNetCore.Health.Formatters.Ascii\App.Metrics.AspNetCore.Health.Formatters.Ascii.csproj" />
     <ProjectReference Include="..\..\src\App.Metrics.AspNetCore.Health.Formatters.Json\App.Metrics.AspNetCore.Health.Formatters.Json.csproj" />
+    <ProjectReference Include="..\..\src\App.Metrics.AspNetCore.Health\App.Metrics.AspNetCore.Health.csproj" />
   </ItemGroup>
   
   <ItemGroup>

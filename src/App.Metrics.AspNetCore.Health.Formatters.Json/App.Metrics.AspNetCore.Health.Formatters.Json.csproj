@@ -10,12 +10,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\App.Metrics.AspNetCore.Health\App.Metrics.AspNetCore.Health.csproj" />
+    <PackageReference Include="App.Metrics.Health.Formatters.Json" Version="$(AppMetricsHealthVersion)" />
+    <PackageReference Include="Newtonsoft.Json" Version="$(NewtonsoftVersion)" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="App.Metrics.Health.Formatters.Json" Version="$(AppMetricsHealthVersion)" />
-    <PackageReference Include="Newtonsoft.Json" Version="$(NewtonsoftVersion)" />
+    <ProjectReference Include="..\App.Metrics.AspNetCore.Health.Abstractions\App.Metrics.AspNetCore.Health.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

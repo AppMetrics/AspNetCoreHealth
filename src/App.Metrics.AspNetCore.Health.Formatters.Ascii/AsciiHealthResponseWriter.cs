@@ -20,8 +20,7 @@ namespace App.Metrics.AspNetCore.Health.Formatters.Ascii
         {
             var payloadBuilder = new AsciiHealthStatusPayloadBuilder();
 
-            var formatter = new HealthStatusPayloadFormatter();
-            formatter.Build(healthStatus, payloadBuilder);
+            HealthStatusPayloadFormatter.Build(healthStatus, payloadBuilder);
 
             return context.Response.WriteAsync(payloadBuilder.PayloadFormatted(), token);
         }

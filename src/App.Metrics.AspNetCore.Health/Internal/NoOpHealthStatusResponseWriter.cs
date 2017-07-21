@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Http;
 namespace App.Metrics.AspNetCore.Health.Internal
 {
     [ExcludeFromCodeCoverage]
-    internal class NoOpHealthStatusResponseWriter : IHealthResponseWriter
+    public class NoOpHealthStatusResponseWriter : IHealthResponseWriter
     {
         /// <inheritdoc />
         public string ContentType => "text/plain";

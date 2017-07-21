@@ -23,8 +23,8 @@ namespace App.Metrics.Builder
         /// <returns>The metrics middleware options checksBuilder</returns>
         public static IAppMetricsMiddlewareHealthChecksOptionsBuilder AddJsonFormatters(this IAppMetricsMiddlewareHealthChecksOptionsBuilder options)
         {
-            options.AppMetricsHealthChecksChecksBuilder.Services.Replace(ServiceDescriptor.Transient<IHealthResponseWriter, JsonHealthResponseWriter>());
-            options.AppMetricsHealthChecksChecksBuilder.Services.Replace(ServiceDescriptor.Transient<IHealthStatusSerializer, HealthStatusSerializer>());
+            options.Services.Replace(ServiceDescriptor.Transient<IHealthResponseWriter, JsonHealthResponseWriter>());
+            options.Services.Replace(ServiceDescriptor.Transient<IHealthStatusSerializer, HealthStatusSerializer>());
 
             return options;
         }
@@ -38,8 +38,8 @@ namespace App.Metrics.Builder
         [ExcludeFromCodeCoverage] // DEVNOTE: No need to test JsonSerializerSettings really
         public static IAppMetricsMiddlewareHealthChecksOptionsBuilder AddJsonFormatters(this IAppMetricsMiddlewareHealthChecksOptionsBuilder options, JsonSerializerSettings serializerSettings)
         {
-            options.AppMetricsHealthChecksChecksBuilder.Services.Replace(ServiceDescriptor.Transient<IHealthResponseWriter, JsonHealthResponseWriter>());
-            options.AppMetricsHealthChecksChecksBuilder.Services.Replace(ServiceDescriptor.Transient<IHealthStatusSerializer>(provider => new HealthStatusSerializer(serializerSettings)));
+            options.Services.Replace(ServiceDescriptor.Transient<IHealthResponseWriter, JsonHealthResponseWriter>());
+            options.Services.Replace(ServiceDescriptor.Transient<IHealthStatusSerializer>(provider => new HealthStatusSerializer(serializerSettings)));
 
             return options;
         }

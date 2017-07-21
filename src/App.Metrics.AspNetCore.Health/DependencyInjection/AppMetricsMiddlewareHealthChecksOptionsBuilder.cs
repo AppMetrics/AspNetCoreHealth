@@ -3,18 +3,19 @@
 // </copyright>
 
 using System;
+using Microsoft.Extensions.DependencyInjection;
 
 // ReSharper disable CheckNamespace
 namespace App.Metrics.Builder
     // ReSharper restore CheckNamespace
 {
-    internal sealed class AppMetricsMiddlewareHealthChecksOptionsBuilder : IAppMetricsMiddlewareHealthChecksOptionsBuilder
+    public sealed class AppMetricsMiddlewareHealthChecksOptionsBuilder : IAppMetricsMiddlewareHealthChecksOptionsBuilder
     {
-        internal AppMetricsMiddlewareHealthChecksOptionsBuilder(IAppMetricsHealthChecksBuilder appMetricsChecksBuilder)
+        public AppMetricsMiddlewareHealthChecksOptionsBuilder(IServiceCollection services)
         {
-            AppMetricsHealthChecksChecksBuilder = appMetricsChecksBuilder ?? throw new ArgumentNullException(nameof(appMetricsChecksBuilder));
+            Services = services ?? throw new ArgumentNullException(nameof(services));
         }
 
-        public IAppMetricsHealthChecksBuilder AppMetricsHealthChecksChecksBuilder { get; }
+        public IServiceCollection Services { get; }
     }
 }

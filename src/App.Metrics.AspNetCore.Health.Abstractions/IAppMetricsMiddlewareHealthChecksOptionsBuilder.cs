@@ -2,6 +2,8 @@
 // Copyright (c) Allan Hardy. All rights reserved.
 // </copyright>
 
+using Microsoft.Extensions.DependencyInjection;
+
 // ReSharper disable CheckNamespace
 namespace App.Metrics.Builder
     // ReSharper restore CheckNamespace
@@ -11,6 +13,6 @@ namespace App.Metrics.Builder
     /// </summary>
     public interface IAppMetricsMiddlewareHealthChecksOptionsBuilder
     {
-        IAppMetricsHealthChecksBuilder AppMetricsHealthChecksChecksBuilder { get; }
+        IServiceCollection Services { get; }
     }
 }

@@ -3,6 +3,7 @@
 // </copyright>
 
 using App.Metrics.AspNetCore.Health.Options;
+using App.Metrics.Health;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;

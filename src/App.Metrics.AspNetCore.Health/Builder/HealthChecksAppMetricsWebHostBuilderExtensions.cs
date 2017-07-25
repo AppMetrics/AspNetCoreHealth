@@ -16,28 +16,26 @@ namespace Microsoft.AspNetCore.Hosting
         ///     Adds App Metrics Health Checks Middleware to the <see cref="T:Microsoft.AspNetCore.Hosting.IWebHostBuilder" /> request
         ///     execution pipeline.
         /// </summary>
-        /// <param name="hostBuilder">The <see cref="T:Microsoft.AspNetCore.Hosting.IWebHostBuilder" />.</param>
+        /// <param name="builder">The <see cref="T:Microsoft.AspNetCore.Hosting.IWebHostBuilder" />.</param>
         /// <returns>A reference to this instance after the operation has completed.</returns>
         /// <exception cref="ArgumentNullException">
         ///     <see cref="T:Microsoft.AspNetCore.Hosting.IWebHostBuilder" /> cannot be null
         /// </exception>
-        public static IWebHostBuilder UseHealth(this IWebHostBuilder hostBuilder)
+        public static IWebHostBuilder UseHealth(this IWebHostBuilder builder)
         {
-            if (hostBuilder == null)
+            if (builder == null)
             {
-                throw new ArgumentNullException(nameof(hostBuilder));
+                throw new ArgumentNullException(nameof(builder));
             }
 
-            hostBuilder.ConfigureServices((context, services) =>
+            builder.ConfigureServices((context, services) =>
             {
                 services.Configure<AppMetricsHealthOptions>(context.Configuration.GetSection("AppMetricsHealthOptions"));
 
-                services.AddHealthCheckMiddleware(
-                        configuration: context.Configuration.GetSection("AppMetricsMiddlewareHealthChecksOptions"),
-                        setupMiddleware: optionsBuilder => optionsBuilder.AddAsciiFormatters());
+                services.AddHealthCheckMiddleware(context.Configuration.GetSection("AppMetricsMiddlewareHealthChecksOptions")).AddAsciiFormatters();
             });
 
-            return hostBuilder;
+            return builder;
         }
     }
 }

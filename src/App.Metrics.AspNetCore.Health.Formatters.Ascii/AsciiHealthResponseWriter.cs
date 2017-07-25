@@ -8,11 +8,16 @@ using App.Metrics.Health;
 using App.Metrics.Health.Formatters.Ascii;
 using App.Metrics.Health.Formatting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
 
 namespace App.Metrics.AspNetCore.Health.Formatters.Ascii
 {
     public class AsciiHealthResponseWriter : IHealthResponseWriter
     {
+        private readonly AppMetricsHealthAsciiOptions _options;
+
+        public AsciiHealthResponseWriter(IOptions<AppMetricsHealthAsciiOptions> options) { _options = options.Value; }
+
         /// <inheritdoc />
         public string ContentType => "text/plain; app.metrics=vnd.app.metrics.v1.health;";
 

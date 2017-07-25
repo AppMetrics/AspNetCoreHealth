@@ -71,7 +71,7 @@ namespace App.Metrics.AspNetCore.Health
                     context.Response.Headers["Warning"] = new[] { $"Warning: 100 '{warning}'" };
                 }
 
-                await _healthResponseWriter.WriteAsync(context, healthStatus, context.RequestAborted).ConfigureAwait(false);
+                await _healthResponseWriter.WriteAsync(context, healthStatus, context.RequestAborted);
 
                 _logger.MiddlewareExecuted(GetType());
 

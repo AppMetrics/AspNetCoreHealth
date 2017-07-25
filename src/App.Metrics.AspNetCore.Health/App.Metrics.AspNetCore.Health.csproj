@@ -8,10 +8,6 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageTags>appmetrics;aspnetcore;middleware;healthchecks</PackageTags>
   </PropertyGroup>
-  
-  <ItemGroup>
-    <Compile Include="..\shared\HttpContextExtensions.cs" Link="Extensions\HttpContextExtensions.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="App.Metrics.Health" Version="$(AppMetricsHealthVersion)" />

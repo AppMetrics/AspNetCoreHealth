@@ -3,48 +3,15 @@
 // </copyright>
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 // ReSharper disable CheckNamespace
 namespace System
 // ReSharper restore CheckNamespace
 {
+    [ExcludeFromCodeCoverage]
     internal static class StringExtensions
     {
-        [DebuggerStepThrough]
-        internal static string EnsureLeadingSlash(this string url)
-        {
-            if (!url.StartsWith("/"))
-            {
-                return "/" + url;
-            }
-
-            return url;
-        }
-
-        [DebuggerStepThrough]
-        internal static string EnsureTrailingSlash(this string url)
-        {
-            if (!url.EndsWith("/"))
-            {
-                return url + "/";
-            }
-
-            return url;
-        }
-
-        [DebuggerStepThrough]
-        internal static string GetSafeString(Func<string> action)
-        {
-            try
-            {
-                return action();
-            }
-            catch (Exception)
-            {
-                return string.Empty;
-            }
-        }
-
         [DebuggerStepThrough]
         internal static bool IsMissing(this string value) { return string.IsNullOrWhiteSpace(value); }
 
@@ -52,11 +19,11 @@ namespace System
         internal static bool IsPresent(this string value) { return !string.IsNullOrWhiteSpace(value); }
 
         [DebuggerStepThrough]
-        internal static string RemoveLeadingSlash(this string url)
+        internal static string EnsureLeadingSlash(this string url)
         {
-            if (url != null && url.StartsWith("/"))
+            if (!url.StartsWith("/"))
             {
-                url = url.Substring(1);
+                return "/" + url;
             }
 
             return url;

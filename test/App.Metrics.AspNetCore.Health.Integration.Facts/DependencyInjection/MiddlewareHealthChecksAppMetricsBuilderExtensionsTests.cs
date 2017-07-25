@@ -61,27 +61,18 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.DependencyInjection
             var configuration = builder.Build();
 
 #pragma warning disable CS0612
-            var healthChecksBuilder = services.AddHealth(_startupAssemblyName);
+            services.AddHealth(_startupAssemblyName);
 #pragma warning restore CS0612
 
             if (setupHealthAction == null)
             {
-                services.AddHealthCheckMiddleware(
-                    configuration.GetSection("AspNetMetrics"),
-                    optionsBuilder =>
-                    {
-                        optionsBuilder.AddAsciiFormatters();
-                    });
+                services.AddHealthCheckMiddleware(configuration.GetSection("AspNetMetrics"))
+                    .AddAsciiFormatters();
             }
             else
             {
-                services.AddHealthCheckMiddleware(
-                    configuration.GetSection("AspNetMetrics"),
-                    setupHealthAction,
-                    optionsBuilder =>
-                    {
-                        optionsBuilder.AddAsciiFormatters();
-                    });
+                services.AddHealthCheckMiddleware(configuration.GetSection("AspNetMetrics"), setupHealthAction)
+                        .AddAsciiFormatters();
             }
 
             return services.BuildServiceProvider();

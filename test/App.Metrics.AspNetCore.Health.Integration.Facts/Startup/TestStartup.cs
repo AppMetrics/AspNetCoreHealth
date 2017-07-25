@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using App.Metrics.AspNetCore.Health.Options;
-using App.Metrics.Builder;
 using App.Metrics.Health;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -45,12 +44,12 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.Startup
 #pragma warning restore CS0612
 
             services.AddHealthCheckMiddleware(
-                    options =>
-                    {
-                        options.HealthEndpointEnabled = appMetricsMiddlewareHealthChecksOptions.HealthEndpointEnabled;
-                        options.HealthEndpoint = appMetricsMiddlewareHealthChecksOptions.HealthEndpoint;
-                    },
-                    optionsBuilder => { optionsBuilder.AddJsonFormatters(); });
+                        options =>
+                        {
+                            options.HealthEndpointEnabled = appMetricsMiddlewareHealthChecksOptions.HealthEndpointEnabled;
+                            options.HealthEndpoint = appMetricsMiddlewareHealthChecksOptions.HealthEndpoint;
+                        })
+                    .AddJsonFormatters();
         }
     }
 }

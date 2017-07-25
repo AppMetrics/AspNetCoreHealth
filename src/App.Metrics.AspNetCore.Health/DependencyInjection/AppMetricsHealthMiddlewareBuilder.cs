@@ -1,4 +1,4 @@
-﻿// <copyright file="AppMetricsMiddlewareHealthChecksOptionsBuilder.cs" company="Allan Hardy">
+﻿// <copyright file="AppMetricsHealthMiddlewareBuilder.cs" company="Allan Hardy">
 // Copyright (c) Allan Hardy. All rights reserved.
 // </copyright>
 
@@ -6,12 +6,12 @@ using System;
 using Microsoft.Extensions.DependencyInjection;
 
 // ReSharper disable CheckNamespace
-namespace App.Metrics.Builder
+namespace App.Metrics.Health.Builder
     // ReSharper restore CheckNamespace
 {
-    public sealed class AppMetricsMiddlewareHealthChecksOptionsBuilder : IAppMetricsMiddlewareHealthChecksOptionsBuilder
+    public sealed class AppMetricsHealthMiddlewareBuilder : IAppMetricsHealthMiddlewareBuilder
     {
-        public AppMetricsMiddlewareHealthChecksOptionsBuilder(IServiceCollection services)
+        public AppMetricsHealthMiddlewareBuilder(IServiceCollection services)
         {
             Services = services ?? throw new ArgumentNullException(nameof(services));
         }

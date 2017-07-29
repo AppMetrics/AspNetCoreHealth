@@ -21,7 +21,7 @@ namespace App.Metrics.AspNetCore.Health
                 // We use the HealthCheckMarkerService to make sure if all the services were added.
                 AppMetricsHealthServicesHelper.ThrowIfHealthChecksNotRegistered(app.ApplicationServices);
 
-                var aspNetMetricsMiddlewareHealthChecksOptions = app.ApplicationServices.GetRequiredService<AppMetricsMiddlewareHealthChecksOptions>();
+                var aspNetMetricsMiddlewareHealthChecksOptions = app.ApplicationServices.GetRequiredService<AppMetricsHealthMiddlewareOptions>();
 
                 if (aspNetMetricsMiddlewareHealthChecksOptions.HealthEndpointEnabled)
                 {

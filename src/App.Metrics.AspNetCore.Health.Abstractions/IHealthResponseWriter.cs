@@ -4,16 +4,13 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using App.Metrics.Health;
 using Microsoft.AspNetCore.Http;
 
-// ReSharper disable CheckNamespace
-namespace App.Metrics.Health
-    // ReSharper restore CheckNamespace
+namespace App.Metrics.AspNetCore.Health
 {
     public interface IHealthResponseWriter
     {
-        string ContentType { get; }
-
         Task WriteAsync(HttpContext context, HealthStatus healthStatus, CancellationToken token = default(CancellationToken));
     }
 }

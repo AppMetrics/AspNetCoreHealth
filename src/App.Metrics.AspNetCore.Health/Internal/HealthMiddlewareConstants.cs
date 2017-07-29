@@ -1,10 +1,10 @@
-﻿// <copyright file="MiddlewareHealthChecksConstants.cs" company="Allan Hardy">
+﻿// <copyright file="HealthMiddlewareConstants.cs" company="Allan Hardy">
 // Copyright (c) Allan Hardy. All rights reserved.
 // </copyright>
 
 namespace App.Metrics.AspNetCore.Health.Internal
 {
-    internal static class MiddlewareHealthChecksConstants
+    internal static class HealthMiddlewareConstants
     {
         public static class DefaultRoutePaths
         {

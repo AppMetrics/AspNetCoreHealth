@@ -1,4 +1,4 @@
-﻿// <copyright file="AppMetricsMiddlewareHealthChecksOptions.cs" company="Allan Hardy">
+﻿// <copyright file="AppMetricsHealthMiddlewareOptions.cs" company="Allan Hardy">
 // Copyright (c) Allan Hardy. All rights reserved.
 // </copyright>
 
@@ -9,9 +9,9 @@ using App.Metrics.AspNetCore.Health.Internal;
 namespace App.Metrics.AspNetCore.Health.Options
 {
     [ExcludeFromCodeCoverage]
-    public class AppMetricsMiddlewareHealthChecksOptions
+    public class AppMetricsHealthMiddlewareOptions
     {
-        public AppMetricsMiddlewareHealthChecksOptions()
+        public AppMetricsHealthMiddlewareOptions()
         {
             HealthEndpointEnabled = true;
         }
@@ -22,7 +22,7 @@ namespace App.Metrics.AspNetCore.Health.Options
         /// <value>
         ///     The health endpoint.
         /// </value>
-        public string HealthEndpoint { get; set; } = MiddlewareHealthChecksConstants.DefaultRoutePaths.HealthEndpoint.EnsureLeadingSlash();
+        public string HealthEndpoint { get; set; } = HealthMiddlewareConstants.DefaultRoutePaths.HealthEndpoint.EnsureLeadingSlash();
 
         /// <summary>
         ///     Gets or sets a value indicating whether [health endpoint should be enabled], if disabled endpoint responds with

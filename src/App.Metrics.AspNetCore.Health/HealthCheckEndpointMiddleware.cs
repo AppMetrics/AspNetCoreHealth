@@ -3,7 +3,6 @@
 // </copyright>
 
 using System;
-using System.Net;
 using System.Threading.Tasks;
 using App.Metrics.AspNetCore.Health.Options;
 using App.Metrics.Health;
@@ -17,14 +16,14 @@ namespace App.Metrics.AspNetCore.Health
         // ReSharper restore ClassNeverInstantiated.Global
     {
         private readonly RequestDelegate _next;
-        private readonly AppMetricsMiddlewareHealthChecksOptions _appMiddlewareOptions;
+        private readonly AppMetricsHealthMiddlewareOptions _appMiddlewareOptions;
         private readonly IProvideHealth _health;
         private readonly IHealthResponseWriter _healthResponseWriter;
         private readonly ILogger<HealthCheckEndpointMiddleware> _logger;
 
         public HealthCheckEndpointMiddleware(
             RequestDelegate next,
-            AppMetricsMiddlewareHealthChecksOptions appMiddlewareOptions,
+            AppMetricsHealthMiddlewareOptions appMiddlewareOptions,
             ILoggerFactory loggerFactory,
             IProvideHealth health,
             IHealthResponseWriter healthResponseWriter)
@@ -46,30 +45,7 @@ namespace App.Metrics.AspNetCore.Health
             {
                 _logger.MiddlewareExecuting(GetType());
 
-                var healthStatus = await _health.ReadStatusAsync(context.RequestAborted);
-                string warning = null;
-
-                var responseStatusCode = HttpStatusCode.OK;
-
-                if (healthStatus.Status.IsUnhealthy())
-                {
-                    responseStatusCode = HttpStatusCode.ServiceUnavailable;
-                }
-
-                if (healthStatus.Status.IsDegraded())
-                {
-                    responseStatusCode = HttpStatusCode.OK;
-                    warning = "Degraded";
-                }
-
-                context.Response.Headers["Content-Type"] = new[] { _healthResponseWriter.ContentType };
-                context.SetNoCacheHeaders();
-                context.Response.StatusCode = (int)responseStatusCode;
-
-                if (warning.IsPresent())
-                {
-                    context.Response.Headers["Warning"] = new[] { $"Warning: 100 '{warning}'" };
-                }
+                var healthStatus = await _health.ReadAsync(context.RequestAborted);
 
                 await _healthResponseWriter.WriteAsync(context, healthStatus, context.RequestAborted);
 

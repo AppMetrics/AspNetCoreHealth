@@ -13,7 +13,6 @@ namespace App.Metrics.AspNetCore.Health.Internal
     [ExcludeFromCodeCoverage]
     public class NoOpHealthStatusResponseWriter : IHealthResponseWriter
     {
-        /// <inheritdoc />
         public string ContentType => "text/plain";
 
         /// <inheritdoc />

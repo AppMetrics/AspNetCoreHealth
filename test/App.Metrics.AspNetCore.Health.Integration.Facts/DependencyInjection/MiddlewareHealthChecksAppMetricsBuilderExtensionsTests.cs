@@ -24,9 +24,9 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.DependencyInjection
         [Fact]
         public void Can_load_settings_from_configuration()
         {
-            var options = new AppMetricsMiddlewareHealthChecksOptions();
+            var options = new AppMetricsHealthMiddlewareOptions();
             var provider = SetupServicesAndConfiguration();
-            Action resolveOptions = () => { options = provider.GetRequiredService<AppMetricsMiddlewareHealthChecksOptions>(); };
+            Action resolveOptions = () => { options = provider.GetRequiredService<AppMetricsHealthMiddlewareOptions>(); };
 
             resolveOptions.ShouldNotThrow();
             options.HealthEndpoint.Should().Be("/health-test");
@@ -36,21 +36,21 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.DependencyInjection
         [Fact]
         public void Can_override_settings_from_configuration()
         {
-            var options = new AppMetricsMiddlewareHealthChecksOptions();
+            var options = new AppMetricsHealthMiddlewareOptions();
             var provider = SetupServicesAndConfiguration(
                 (o) =>
                 {
                     o.HealthEndpointEnabled = true;
                 });
 
-            Action resolveOptions = () => { options = provider.GetRequiredService<AppMetricsMiddlewareHealthChecksOptions>(); };
+            Action resolveOptions = () => { options = provider.GetRequiredService<AppMetricsHealthMiddlewareOptions>(); };
 
             resolveOptions.ShouldNotThrow();
             options.HealthEndpointEnabled.Should().Be(true);
         }
 
         private IServiceProvider SetupServicesAndConfiguration(
-            Action<AppMetricsMiddlewareHealthChecksOptions> setupHealthAction = null)
+            Action<AppMetricsHealthMiddlewareOptions> setupHealthAction = null)
         {
             var services = new ServiceCollection();
 
@@ -66,13 +66,11 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.DependencyInjection
 
             if (setupHealthAction == null)
             {
-                services.AddHealthCheckMiddleware(configuration.GetSection("AspNetMetrics"))
-                    .AddAsciiFormatters();
+                services.AddHealthCheckMiddleware(configuration.GetSection("AspNetMetrics"));
             }
             else
             {
-                services.AddHealthCheckMiddleware(configuration.GetSection("AspNetMetrics"), setupHealthAction)
-                        .AddAsciiFormatters();
+                services.AddHealthCheckMiddleware(configuration.GetSection("AspNetMetrics"), setupHealthAction);
             }
 
             return services.BuildServiceProvider();

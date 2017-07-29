@@ -6,7 +6,6 @@ using System;
 using App.Metrics.AspNetCore.Health;
 using App.Metrics.AspNetCore.Health.Internal;
 using App.Metrics.AspNetCore.Health.Options;
-using App.Metrics.Health;
 using App.Metrics.Health.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,7 +22,7 @@ namespace Microsoft.AspNetCore.Hosting
             this IServiceCollection services,
             IConfiguration configuration)
         {
-            services.Configure<AppMetricsMiddlewareHealthChecksOptions>(configuration);
+            services.Configure<AppMetricsHealthMiddlewareOptions>(configuration);
 
             return services.AddMetricsMiddlewareHealthChecksCore();
         }
@@ -31,9 +30,9 @@ namespace Microsoft.AspNetCore.Hosting
         public static IAppMetricsHealthMiddlewareBuilder AddHealthCheckMiddleware(
             this IServiceCollection services,
             IConfiguration configuration,
-            Action<AppMetricsMiddlewareHealthChecksOptions> setupOptionsAction)
+            Action<AppMetricsHealthMiddlewareOptions> setupOptionsAction)
         {
-            services.Configure<AppMetricsMiddlewareHealthChecksOptions>(configuration);
+            services.Configure<AppMetricsHealthMiddlewareOptions>(configuration);
             services.Configure(setupOptionsAction);
 
             return services.AddMetricsMiddlewareHealthChecksCore();
@@ -41,7 +40,7 @@ namespace Microsoft.AspNetCore.Hosting
 
         public static IAppMetricsHealthMiddlewareBuilder AddHealthCheckMiddleware(
             this IServiceCollection services,
-            Action<AppMetricsMiddlewareHealthChecksOptions> setupOptionsAction)
+            Action<AppMetricsHealthMiddlewareOptions> setupOptionsAction)
         {
             services.Configure(setupOptionsAction);
 
@@ -60,9 +59,9 @@ namespace Microsoft.AspNetCore.Hosting
 
         private static IAppMetricsHealthMiddlewareBuilder AddMetricsMiddlewareHealthChecksCore(this IServiceCollection services)
         {
-            services.TryAddSingleton(ServiceDescriptor.Transient<IHealthResponseWriter, NoOpHealthStatusResponseWriter>());
+            services.TryAddSingleton<IHealthResponseWriter, HealthResponseWriter>();
             services.TryAddSingleton<AppMetricsMiddlewareHealthChecksMarkerService, AppMetricsMiddlewareHealthChecksMarkerService>();
-            services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<AppMetricsMiddlewareHealthChecksOptions>>().Value);
+            services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<AppMetricsHealthMiddlewareOptions>>().Value);
             services.AddSingleton<IStartupFilter>(new HealthCheckStartupFilter());
 
             return AddAppMetricsMiddlewareHealthChecksBuilder(services);

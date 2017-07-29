@@ -20,7 +20,7 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.Startup
 
         protected void SetupServices(
             IServiceCollection services,
-            AppMetricsMiddlewareHealthChecksOptions appMetricsMiddlewareHealthChecksOptions,
+            AppMetricsHealthMiddlewareOptions appMetricsMiddlewareHealthChecksOptions,
             IEnumerable<HealthCheckResult> healthChecks = null)
         {
             services.AddLogging().AddRouting(options => { options.LowercaseUrls = true; });
@@ -44,12 +44,11 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.Startup
 #pragma warning restore CS0612
 
             services.AddHealthCheckMiddleware(
-                        options =>
-                        {
-                            options.HealthEndpointEnabled = appMetricsMiddlewareHealthChecksOptions.HealthEndpointEnabled;
-                            options.HealthEndpoint = appMetricsMiddlewareHealthChecksOptions.HealthEndpoint;
-                        })
-                    .AddJsonFormatters();
+                options =>
+                {
+                    options.HealthEndpointEnabled = appMetricsMiddlewareHealthChecksOptions.HealthEndpointEnabled;
+                    options.HealthEndpoint = appMetricsMiddlewareHealthChecksOptions.HealthEndpoint;
+                });
         }
     }
 }

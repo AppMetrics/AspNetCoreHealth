@@ -17,7 +17,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\App.Metrics.AspNetCore.Health.Abstractions\App.Metrics.AspNetCore.Health.Abstractions.csproj" />
-    <ProjectReference Include="..\App.Metrics.AspNetCore.Health.Formatters.Ascii\App.Metrics.AspNetCore.Health.Formatters.Ascii.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,8 +1,9 @@
-﻿// <copyright file="HealthChecksAppMetricsWebHostBuilderExtensions.cs" company="Allan Hardy">
+﻿// <copyright file="AppMetricsAspNetCoreHealthWebHostBuilderExtensions.cs" company="Allan Hardy">
 // Copyright (c) Allan Hardy. All rights reserved.
 // </copyright>
 
 using System;
+using App.Metrics.AspNetCore.Health.Core;
 using App.Metrics.Health;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Microsoft.AspNetCore.Hosting
     // ReSharper restore CheckNamespace
 {
-    public static class HealthChecksAppMetricsWebHostBuilderExtensions
+    public static class AppMetricsAspNetCoreHealthWebHostBuilderExtensions
     {
         /// <summary>
         ///     Adds App Metrics Health Checks Middleware to the <see cref="T:Microsoft.AspNetCore.Hosting.IWebHostBuilder" /> request
@@ -31,8 +32,8 @@ namespace Microsoft.AspNetCore.Hosting
             builder.ConfigureServices((context, services) =>
             {
                 services.Configure<AppMetricsHealthOptions>(context.Configuration.GetSection("AppMetricsHealthOptions"));
-
-                services.AddHealthCheckMiddleware(context.Configuration.GetSection("AppMetricsAspNetHealthOptions"));
+                services.AddSingleton<IStartupFilter>(new HealthStartupFilter());
+                services.AddHealthMiddlewareCore(context.Configuration.GetSection("AppMetricsAspNetHealthOptions"));
             });
 
             return builder;

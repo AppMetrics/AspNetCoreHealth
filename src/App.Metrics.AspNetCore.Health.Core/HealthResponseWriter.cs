@@ -7,14 +7,13 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using App.Metrics.AspNetCore.Health.Options;
 using App.Metrics.Health;
 using App.Metrics.Health.Formatters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 
-namespace App.Metrics.AspNetCore.Health
+namespace App.Metrics.AspNetCore.Health.Core
 {
     public class HealthResponseWriter : IHealthResponseWriter
     {

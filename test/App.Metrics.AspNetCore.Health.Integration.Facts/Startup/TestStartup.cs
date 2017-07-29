@@ -5,7 +5,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using App.Metrics.AspNetCore.Health.Options;
+using App.Metrics.AspNetCore.Health.Core;
 using App.Metrics.Health;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -16,7 +16,7 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.Startup
 {
     public abstract class TestStartup
     {
-        protected void SetupAppBuilder(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory) { }
+        protected void SetupAppBuilder(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory) { app.UseHealth(); }
 
         protected void SetupServices(
             IServiceCollection services,
@@ -29,7 +29,7 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.Startup
             var startupAssemblyName = typeof(TestStartup).Assembly.GetName().Name;
 
 #pragma warning disable CS0612
-            services.
+            var healthBuilder = services.
                 AddHealth(
                     startupAssemblyName,
                     checksRegistry =>
@@ -44,7 +44,7 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.Startup
                     });
 #pragma warning restore CS0612
 
-            services.AddHealthCheckMiddleware(
+            healthBuilder.AddMiddleware(
                 options =>
                 {
                     options.HealthEndpointEnabled = appMetricsMiddlewareHealthChecksOptions.HealthEndpointEnabled;

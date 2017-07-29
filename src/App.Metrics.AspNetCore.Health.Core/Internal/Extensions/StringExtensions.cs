@@ -7,7 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 
 // ReSharper disable CheckNamespace
 namespace System
-// ReSharper restore CheckNamespace
+    // ReSharper restore CheckNamespace
 {
     [ExcludeFromCodeCoverage]
     internal static class StringExtensions

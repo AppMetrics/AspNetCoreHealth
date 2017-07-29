@@ -3,14 +3,10 @@
 // </copyright>
 
 using System;
-using System.IO;
-using App.Metrics.AspNetCore.Health.Options;
+using App.Metrics.AspNetCore.Health.Core;
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Options;
 using Xunit;
 
 namespace App.Metrics.AspNetCore.Health.Integration.Facts.DependencyInjection
@@ -42,10 +38,7 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.DependencyInjection
         {
             var options = new AppMetricsAspNetHealthOptions();
             var provider = SetupServicesAndConfiguration(
-                (o) =>
-                {
-                    o.HealthEndpointEnabled = true;
-                });
+                (o) => { o.HealthEndpointEnabled = true; });
 
             Action resolveOptions = () => { options = provider.GetRequiredService<AppMetricsAspNetHealthOptions>(); };
 
@@ -65,16 +58,16 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.DependencyInjection
             services.AddOptions();
 
 #pragma warning disable CS0612
-            services.AddHealth(_startupAssemblyName);
+            var healthBuilder = services.AddHealth(_startupAssemblyName);
 #pragma warning restore CS0612
 
             if (setupHealthAction == null)
             {
-                services.AddHealthCheckMiddleware(configuration.GetSection("AppMetricsAspNetHealthOptions"));
+                healthBuilder.AddMiddleware(configuration.GetSection("AppMetricsAspNetHealthOptions"));
             }
             else
             {
-                services.AddHealthCheckMiddleware(configuration.GetSection("AppMetricsAspNetHealthOptions"), setupHealthAction);
+                healthBuilder.AddMiddleware(configuration.GetSection("AppMetricsAspNetHealthOptions"), setupHealthAction);
             }
 
             return services.BuildServiceProvider();

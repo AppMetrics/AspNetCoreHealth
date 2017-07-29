@@ -4,9 +4,9 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using App.Metrics.AspNetCore.Health.Internal;
+using App.Metrics.AspNetCore.Health.Core.Internal;
 
-namespace App.Metrics.AspNetCore.Health.Options
+namespace App.Metrics.AspNetCore.Health.Core
 {
     [ExcludeFromCodeCoverage]
     public class AppMetricsAspNetHealthOptions

@@ -2,7 +2,7 @@
 // Copyright (c) Allan Hardy. All rights reserved.
 // </copyright>
 
-namespace App.Metrics.AspNetCore.Health.Internal
+namespace App.Metrics.AspNetCore.Health.Core.Internal
 {
     internal static class HealthMiddlewareConstants
     {

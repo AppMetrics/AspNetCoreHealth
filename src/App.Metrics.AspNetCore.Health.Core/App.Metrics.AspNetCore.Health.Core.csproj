@@ -3,20 +3,20 @@
   <Import Project="..\..\build\common.props" />
   
   <PropertyGroup>
-    <Description>App Metrics ASP.NET Core Health provides health checking capabilities to web applications and allows you to expose health check results over HTTP.</Description>
+    <Description>App Metrics ASP.NET Core health core components.</Description>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageTags>appmetrics;aspnetcore;middleware;healthchecks</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="App.Metrics.Health" Version="$(AppMetricsHealthVersion)" />
+    <PackageReference Include="App.Metrics.Health.Core" Version="$(AppMetricsHealthVersion)" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="$(AspNetCoreVersion)" />
     <PackageReference Include="Microsoft.AspNetCore.Routing" Version="$(AspNetCoreVersion)" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\App.Metrics.AspNetCore.Health.Core\App.Metrics.AspNetCore.Health.Core.csproj" />
+    <ProjectReference Include="..\App.Metrics.AspNetCore.Health.Abstractions\App.Metrics.AspNetCore.Health.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

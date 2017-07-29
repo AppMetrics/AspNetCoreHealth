@@ -1,17 +1,16 @@
-﻿// <copyright file="HealthCheckStartupFilter.cs" company="Allan Hardy">
+﻿// <copyright file="HealthStartupFilter.cs" company="Allan Hardy">
 // Copyright (c) Allan Hardy. All rights reserved.
 // </copyright>
 
 using System;
-using App.Metrics.AspNetCore.Health.Options;
 using App.Metrics.Health.DependencyInjection.Internal;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace App.Metrics.AspNetCore.Health
+namespace App.Metrics.AspNetCore.Health.Core
 {
-    public class HealthCheckStartupFilter : IStartupFilter
+    public class HealthStartupFilter : IStartupFilter
     {
         public Action<IApplicationBuilder> Configure(Action<IApplicationBuilder> next)
         {

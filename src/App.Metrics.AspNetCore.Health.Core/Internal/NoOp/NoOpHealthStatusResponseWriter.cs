@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using App.Metrics.Health;
 using Microsoft.AspNetCore.Http;
 
-namespace App.Metrics.AspNetCore.Health.Internal
+namespace App.Metrics.AspNetCore.Health.Core.Internal.NoOp
 {
     [ExcludeFromCodeCoverage]
     public class NoOpHealthStatusResponseWriter : IHealthResponseWriter

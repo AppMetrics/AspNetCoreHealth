@@ -55,6 +55,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Metrics.AspNetCore.Heal
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Metrics.AspNetCore.Health.Abstractions", "src\App.Metrics.AspNetCore.Health.Abstractions\App.Metrics.AspNetCore.Health.Abstractions.csproj", "{8869572F-E409-49A4-AA47-231F0317589E}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Metrics.AspNetCore.Health.Core", "src\App.Metrics.AspNetCore.Health.Core\App.Metrics.AspNetCore.Health.Core.csproj", "{9EFA13CB-ED71-4921-8134-21CB2D0E2292}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,10 @@ Global
 		{8869572F-E409-49A4-AA47-231F0317589E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8869572F-E409-49A4-AA47-231F0317589E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8869572F-E409-49A4-AA47-231F0317589E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EFA13CB-ED71-4921-8134-21CB2D0E2292}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EFA13CB-ED71-4921-8134-21CB2D0E2292}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EFA13CB-ED71-4921-8134-21CB2D0E2292}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EFA13CB-ED71-4921-8134-21CB2D0E2292}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,6 +96,7 @@ Global
 		{AD27983B-4B95-44BB-A75B-C68520158C06} = {2D805782-756E-4C98-B22E-F502BEE95318}
 		{951AA943-DB5A-4765-9923-C713DDC8FB5C} = {DD2E4647-7125-4CE3-9BA5-B45A26113A31}
 		{8869572F-E409-49A4-AA47-231F0317589E} = {2D805782-756E-4C98-B22E-F502BEE95318}
+		{9EFA13CB-ED71-4921-8134-21CB2D0E2292} = {2D805782-756E-4C98-B22E-F502BEE95318}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A8699A1D-0BA1-403C-86E9-C789CD2645EB}

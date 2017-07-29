@@ -8,11 +8,6 @@ namespace Microsoft.AspNetCore.Http
 {
     internal static class HttpContextExtensions
     {
-        public static bool IsSuccessfulResponse(this HttpResponse httpResponse)
-        {
-           return httpResponse.StatusCode >= StatusCodes.Status200OK && httpResponse.StatusCode < StatusCodes.Status300MultipleChoices;
-        }
-
         public static void SetNoCacheHeaders(this HttpContext context)
         {
             context.Response.Headers["Cache-Control"] = new[] { "no-cache, no-store, must-revalidate" };

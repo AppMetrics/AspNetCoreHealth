@@ -4,12 +4,11 @@
 
 using System;
 using System.Threading.Tasks;
-using App.Metrics.AspNetCore.Health.Options;
 using App.Metrics.Health;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
-namespace App.Metrics.AspNetCore.Health
+namespace App.Metrics.AspNetCore.Health.Core
 {
     // ReSharper disable ClassNeverInstantiated.Global
     public class HealthCheckEndpointMiddleware

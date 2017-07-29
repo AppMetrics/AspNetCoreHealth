@@ -16,10 +16,7 @@ namespace App.Metrics.Sandbox
 
         public IConfiguration Configuration { get; }
 
-        public void Configure(IApplicationBuilder app)
-        {
-            app.UseMvc();
-        }
+        public void Configure(IApplicationBuilder app) { app.UseMvc(); }
 
         public void ConfigureServices(IServiceCollection services)
         {

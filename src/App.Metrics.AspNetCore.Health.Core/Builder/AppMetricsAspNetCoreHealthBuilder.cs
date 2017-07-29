@@ -1,4 +1,4 @@
-﻿// <copyright file="AppMetricsHealthMiddlewareBuilder.cs" company="Allan Hardy">
+﻿// <copyright file="AppMetricsAspNetCoreHealthBuilder.cs" company="Allan Hardy">
 // Copyright (c) Allan Hardy. All rights reserved.
 // </copyright>
 
@@ -9,9 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 namespace App.Metrics.Health.Builder
     // ReSharper restore CheckNamespace
 {
-    public sealed class AppMetricsHealthMiddlewareBuilder : IAppMetricsHealthMiddlewareBuilder
+    public sealed class AppMetricsAspNetCoreHealthBuilder : IAppMetricsAspNetCoreHealthBuilder
     {
-        public AppMetricsHealthMiddlewareBuilder(IServiceCollection services)
+        public AppMetricsAspNetCoreHealthBuilder(IServiceCollection services)
         {
             Services = services ?? throw new ArgumentNullException(nameof(services));
         }

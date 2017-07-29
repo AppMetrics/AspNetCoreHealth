@@ -32,7 +32,7 @@ namespace Microsoft.AspNetCore.Hosting
             {
                 services.Configure<AppMetricsHealthOptions>(context.Configuration.GetSection("AppMetricsHealthOptions"));
 
-                services.AddHealthCheckMiddleware(context.Configuration.GetSection("AppMetricsHealthMiddlewareOptions"));
+                services.AddHealthCheckMiddleware(context.Configuration.GetSection("AppMetricsAspNetHealthOptions"));
             });
 
             return builder;

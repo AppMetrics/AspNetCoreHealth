@@ -22,7 +22,7 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.Startup
         {
             SetupServices(
                 services,
-                new AppMetricsHealthMiddlewareOptions(),
+                new AppMetricsAspNetHealthOptions(),
                 healthChecks: new[] { HealthCheckResult.Healthy(), HealthCheckResult.Degraded() });
         }
     }

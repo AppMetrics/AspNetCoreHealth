@@ -22,7 +22,7 @@ namespace App.Metrics.AspNetCore.Health
 
         public HealthResponseWriter(
             IOptions<AppMetricsHealthOptions> healthOptionsAccessor,
-            IOptions<AppMetricsHealthMiddlewareOptions> healthMiddlewareOptionsAccessor)
+            IOptions<AppMetricsAspNetHealthOptions> healthMiddlewareOptionsAccessor)
         {
             if (healthOptionsAccessor == null)
             {
@@ -45,14 +45,17 @@ namespace App.Metrics.AspNetCore.Health
 
             context.SetNoCacheHeaders();
 
-            foreach (var accept in acceptHeaderMediaType.Accept)
+            if (acceptHeaderMediaType.Accept != null)
             {
-                formatter = ResolveFormatter(_healthOptions.OutputFormatters, accept);
-
-                if (formatter != default(IHealthOutputFormatter))
+                foreach (var accept in acceptHeaderMediaType.Accept)
                 {
-                    encoding = accept.Encoding ?? encoding;
-                    break;
+                    formatter = ResolveFormatter(_healthOptions.OutputFormatters, accept);
+
+                    if (formatter != default(IHealthOutputFormatter))
+                    {
+                        encoding = accept.Encoding ?? encoding;
+                        break;
+                    }
                 }
             }
 

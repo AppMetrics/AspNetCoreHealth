@@ -22,7 +22,7 @@ namespace Microsoft.AspNetCore.Hosting
             this IServiceCollection services,
             IConfiguration configuration)
         {
-            services.Configure<AppMetricsHealthMiddlewareOptions>(configuration);
+            services.Configure<AppMetricsAspNetHealthOptions>(configuration);
 
             return services.AddMetricsMiddlewareHealthChecksCore();
         }
@@ -30,9 +30,9 @@ namespace Microsoft.AspNetCore.Hosting
         public static IAppMetricsHealthMiddlewareBuilder AddHealthCheckMiddleware(
             this IServiceCollection services,
             IConfiguration configuration,
-            Action<AppMetricsHealthMiddlewareOptions> setupOptionsAction)
+            Action<AppMetricsAspNetHealthOptions> setupOptionsAction)
         {
-            services.Configure<AppMetricsHealthMiddlewareOptions>(configuration);
+            services.Configure<AppMetricsAspNetHealthOptions>(configuration);
             services.Configure(setupOptionsAction);
 
             return services.AddMetricsMiddlewareHealthChecksCore();
@@ -40,7 +40,7 @@ namespace Microsoft.AspNetCore.Hosting
 
         public static IAppMetricsHealthMiddlewareBuilder AddHealthCheckMiddleware(
             this IServiceCollection services,
-            Action<AppMetricsHealthMiddlewareOptions> setupOptionsAction)
+            Action<AppMetricsAspNetHealthOptions> setupOptionsAction)
         {
             services.Configure(setupOptionsAction);
 
@@ -61,7 +61,7 @@ namespace Microsoft.AspNetCore.Hosting
         {
             services.TryAddSingleton<IHealthResponseWriter, HealthResponseWriter>();
             services.TryAddSingleton<AppMetricsMiddlewareHealthChecksMarkerService, AppMetricsMiddlewareHealthChecksMarkerService>();
-            services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<AppMetricsHealthMiddlewareOptions>>().Value);
+            services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<AppMetricsAspNetHealthOptions>>().Value);
             services.AddSingleton<IStartupFilter>(new HealthCheckStartupFilter());
 
             return AddAppMetricsMiddlewareHealthChecksBuilder(services);

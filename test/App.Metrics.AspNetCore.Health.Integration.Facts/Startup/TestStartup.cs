@@ -20,9 +20,10 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.Startup
 
         protected void SetupServices(
             IServiceCollection services,
-            AppMetricsHealthMiddlewareOptions appMetricsMiddlewareHealthChecksOptions,
+            AppMetricsAspNetHealthOptions appMetricsMiddlewareHealthChecksOptions,
             IEnumerable<HealthCheckResult> healthChecks = null)
         {
+            services.AddOptions();
             services.AddLogging().AddRouting(options => { options.LowercaseUrls = true; });
 
             var startupAssemblyName = typeof(TestStartup).Assembly.GetName().Name;

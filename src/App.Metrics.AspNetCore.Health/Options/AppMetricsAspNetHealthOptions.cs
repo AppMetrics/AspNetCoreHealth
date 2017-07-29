@@ -1,4 +1,4 @@
-﻿// <copyright file="AppMetricsHealthMiddlewareOptions.cs" company="Allan Hardy">
+﻿// <copyright file="AppMetricsAspNetHealthOptions.cs" company="Allan Hardy">
 // Copyright (c) Allan Hardy. All rights reserved.
 // </copyright>
 
@@ -9,9 +9,9 @@ using App.Metrics.AspNetCore.Health.Internal;
 namespace App.Metrics.AspNetCore.Health.Options
 {
     [ExcludeFromCodeCoverage]
-    public class AppMetricsHealthMiddlewareOptions
+    public class AppMetricsAspNetHealthOptions
     {
-        public AppMetricsHealthMiddlewareOptions()
+        public AppMetricsAspNetHealthOptions()
         {
             HealthEndpointEnabled = true;
         }

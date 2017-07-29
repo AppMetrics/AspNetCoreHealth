@@ -21,14 +21,6 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.Middleware
         private HttpClient Client { get; }
 
         [Fact]
-        public async Task Can_count_errors_per_endpoint_and_also_get_a_total_error_count()
-        {
-            var result = await Client.GetAsync("/health");
-
-            result.StatusCode.Should().Be(HttpStatusCode.OK);
-        }
-
-        [Fact]
         public async Task Returns_correct_response_headers()
         {
             var result = await Client.GetAsync("/health");
@@ -37,6 +29,7 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.Middleware
             result.Headers.CacheControl.NoStore.Should().Be(true);
             result.Headers.CacheControl.MustRevalidate.Should().Be(true);
             result.Headers.Pragma.ToString().Should().Be("no-cache");
+            result.StatusCode.Should().Be(HttpStatusCode.OK);
         }
     }
 }

@@ -17,6 +17,7 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts
         public StartupTestFixture()
         {
             var builder = new WebHostBuilder().UseStartup<TStartup>();
+
             _server = new TestServer(builder);
 
             Client = _server.CreateClient();

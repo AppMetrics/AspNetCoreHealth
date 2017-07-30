@@ -4,7 +4,6 @@
 
 using System;
 using App.Metrics.AspNetCore.Health.Core;
-using App.Metrics.Health;
 using Microsoft.Extensions.DependencyInjection;
 
 // ReSharper disable CheckNamespace
@@ -31,7 +30,7 @@ namespace Microsoft.AspNetCore.Hosting
 
             builder.ConfigureServices((context, services) =>
             {
-                services.Configure<AppMetricsHealthOptions>(context.Configuration.GetSection("AppMetricsHealthOptions"));
+                services.AddHealth(context.Configuration.GetSection("AppMetricsHealthOptions"));
                 services.AddSingleton<IStartupFilter>(new HealthStartupFilter());
                 services.AddHealthMiddlewareCore(context.Configuration.GetSection("AppMetricsAspNetHealthOptions"));
             });

@@ -32,14 +32,14 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.Startup
             var healthBuilder = services.
                 AddHealth(
                     startupAssemblyName,
-                    checksRegistry =>
+                    options =>
                     {
                         var checks = healthChecks?.ToList() ?? new List<HealthCheckResult>();
 
                         for (var i = 0; i < checks.Count; i++)
                         {
                             var check = checks[i];
-                            checksRegistry.AddCheck("Check" + i, () => new ValueTask<HealthCheckResult>(check));
+                            options.Checks.AddCheck("Check" + i, () => new ValueTask<HealthCheckResult>(check));
                         }
                     });
 #pragma warning restore CS0612

@@ -63,11 +63,11 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.DependencyInjection
 
             if (setupHealthAction == null)
             {
-                healthBuilder.AddMiddleware(configuration.GetSection("AppMetricsAspNetHealthOptions"));
+                healthBuilder.AddAspNetCoreHealth(configuration.GetSection("AppMetricsAspNetHealthOptions"));
             }
             else
             {
-                healthBuilder.AddMiddleware(configuration.GetSection("AppMetricsAspNetHealthOptions"), setupHealthAction);
+                healthBuilder.AddAspNetCoreHealth(configuration.GetSection("AppMetricsAspNetHealthOptions"), setupHealthAction);
             }
 
             return services.BuildServiceProvider();

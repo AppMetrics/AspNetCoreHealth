@@ -10,13 +10,16 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Microsoft.AspNetCore.Hosting
     // ReSharper restore CheckNamespace
 {
+    /// <summary>
+    /// Extension methods for <see cref="IWebHostBuilder"/> to add App Metrics health to the request execution pipeline.
+    /// </summary>
     public static class AppMetricsAspNetCoreHealthWebHostBuilderExtensions
     {
         /// <summary>
         ///     Adds App Metrics Health Checks Middleware to the <see cref="T:Microsoft.AspNetCore.Hosting.IWebHostBuilder" /> request
         ///     execution pipeline.
         /// </summary>
-        /// <param name="builder">The <see cref="T:Microsoft.AspNetCore.Hosting.IWebHostBuilder" />.</param>
+        /// <param name="builder">The <see cref="IWebHostBuilder" />.</param>
         /// <returns>A reference to this instance after the operation has completed.</returns>
         /// <exception cref="ArgumentNullException">
         ///     <see cref="T:Microsoft.AspNetCore.Hosting.IWebHostBuilder" /> cannot be null
@@ -31,8 +34,8 @@ namespace Microsoft.AspNetCore.Hosting
             builder.ConfigureServices((context, services) =>
             {
                 services.AddHealth(context.Configuration.GetSection("AppMetricsHealthOptions"));
+                services.AddAspNetCoreHealthCore(context.Configuration.GetSection("AppMetricsAspNetHealthOptions"));
                 services.AddSingleton<IStartupFilter>(new HealthStartupFilter());
-                services.AddHealthMiddlewareCore(context.Configuration.GetSection("AppMetricsAspNetHealthOptions"));
             });
 
             return builder;

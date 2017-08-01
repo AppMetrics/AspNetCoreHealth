@@ -3,10 +3,8 @@
 // </copyright>
 
 using System;
-using App.Metrics.Health.DependencyInjection.Internal;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace App.Metrics.AspNetCore.Health.Core
 {
@@ -16,16 +14,7 @@ namespace App.Metrics.AspNetCore.Health.Core
         {
             return app =>
             {
-                // Verify if AddHealth was done before calling UseHealth
-                // We use the HealthCheckMarkerService to make sure if all the services were added.
-                AppMetricsHealthServicesHelper.ThrowIfHealthChecksNotRegistered(app.ApplicationServices);
-
-                var aspNetMetricsMiddlewareHealthChecksOptions = app.ApplicationServices.GetRequiredService<AppMetricsAspNetHealthOptions>();
-
-                if (aspNetMetricsMiddlewareHealthChecksOptions.HealthEndpointEnabled)
-                {
-                    app.UseMiddleware<HealthCheckEndpointMiddleware>();
-                }
+                app.UseHealth();
 
                 next(app);
             };

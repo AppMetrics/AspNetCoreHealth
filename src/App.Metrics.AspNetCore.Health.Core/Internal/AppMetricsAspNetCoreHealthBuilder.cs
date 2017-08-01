@@ -5,9 +5,7 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
 
-// ReSharper disable CheckNamespace
-namespace App.Metrics.Health.Builder
-    // ReSharper restore CheckNamespace
+namespace App.Metrics.AspNetCore.Health.Core.Internal
 {
     public sealed class AppMetricsAspNetCoreHealthBuilder : IAppMetricsAspNetCoreHealthBuilder
     {
@@ -16,6 +14,7 @@ namespace App.Metrics.Health.Builder
             Services = services ?? throw new ArgumentNullException(nameof(services));
         }
 
+        /// <inheritdoc />
         public IServiceCollection Services { get; }
     }
 }

@@ -5,11 +5,15 @@
 using System;
 using App.Metrics.AspNetCore.Health.Core;
 using App.Metrics.Health.DependencyInjection.Internal;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace App.Metrics.AspNetCore.Health
+// ReSharper disable CheckNamespace
+namespace Microsoft.AspNetCore.Builder
+    // ReSharper restore CheckNamespace
 {
+    /// <summary>
+    /// Extension methods for <see cref="IApplicationBuilder"/> to add App Metrics health to the request execution pipeline.
+    /// </summary>
     public static class AppMetricsAspNetCoreHealthApplicationBuilderExtensions
     {
         /// <summary>
@@ -23,8 +27,6 @@ namespace App.Metrics.AspNetCore.Health
             {
                 throw new ArgumentNullException(nameof(app));
             }
-
-            // TODO: Don't want this copy and pasted from HealthStartupFilter
 
             // Verify if AddHealth was done before calling UseHealth
             // We use the HealthCheckMarkerService to make sure if all the services were added.

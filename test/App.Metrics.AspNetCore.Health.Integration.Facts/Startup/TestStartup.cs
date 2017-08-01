@@ -44,7 +44,7 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.Startup
                     });
 #pragma warning restore CS0612
 
-            healthBuilder.AddMiddleware(
+            healthBuilder.AddAspNetCoreHealth(
                 options =>
                 {
                     options.HealthEndpointEnabled = appMetricsMiddlewareHealthChecksOptions.HealthEndpointEnabled;

@@ -15,14 +15,14 @@ namespace App.Metrics.AspNetCore.Health.Core
         // ReSharper restore ClassNeverInstantiated.Global
     {
         private readonly RequestDelegate _next;
-        private readonly AppMetricsAspNetHealthOptions _appMiddlewareOptions;
+        private readonly HealthAspNetCoreOptions _appMiddlewareOptions;
         private readonly IProvideHealth _health;
         private readonly IHealthResponseWriter _healthResponseWriter;
         private readonly ILogger<HealthCheckEndpointMiddleware> _logger;
 
         public HealthCheckEndpointMiddleware(
             RequestDelegate next,
-            AppMetricsAspNetHealthOptions appMiddlewareOptions,
+            HealthAspNetCoreOptions appMiddlewareOptions,
             ILoggerFactory loggerFactory,
             IProvideHealth health,
             IHealthResponseWriter healthResponseWriter)

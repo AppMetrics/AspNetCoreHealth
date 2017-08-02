@@ -1,17 +1,15 @@
-﻿// <copyright file="AppMetricsAspNetHealthOptions.cs" company="Allan Hardy">
+﻿// <copyright file="HealthAspNetCoreOptions.cs" company="Allan Hardy">
 // Copyright (c) Allan Hardy. All rights reserved.
 // </copyright>
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using App.Metrics.AspNetCore.Health.Core.Internal;
 
 namespace App.Metrics.AspNetCore.Health.Core
 {
-    [ExcludeFromCodeCoverage]
-    public class AppMetricsAspNetHealthOptions
+    public class HealthAspNetCoreOptions
     {
-        public AppMetricsAspNetHealthOptions()
+        public HealthAspNetCoreOptions()
         {
             HealthEndpointEnabled = true;
         }

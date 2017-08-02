@@ -23,10 +23,10 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.DependencyInjection
         [Fact]
         public void Can_load_settings_from_configuration()
         {
-            var options = new AppMetricsAspNetHealthOptions();
+            var options = new HealthAspNetCoreOptions();
             var provider = SetupServicesAndConfiguration();
 
-            Action resolveOptions = () => { options = provider.GetRequiredService<AppMetricsAspNetHealthOptions>(); };
+            Action resolveOptions = () => { options = provider.GetRequiredService<HealthAspNetCoreOptions>(); };
 
             resolveOptions.ShouldNotThrow();
             options.HealthEndpoint.Should().Be("/health-test");
@@ -36,18 +36,18 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.DependencyInjection
         [Fact]
         public void Can_override_settings_from_configuration()
         {
-            var options = new AppMetricsAspNetHealthOptions();
+            var options = new HealthAspNetCoreOptions();
             var provider = SetupServicesAndConfiguration(
                 (o) => { o.HealthEndpointEnabled = true; });
 
-            Action resolveOptions = () => { options = provider.GetRequiredService<AppMetricsAspNetHealthOptions>(); };
+            Action resolveOptions = () => { options = provider.GetRequiredService<HealthAspNetCoreOptions>(); };
 
             resolveOptions.ShouldNotThrow();
             options.HealthEndpointEnabled.Should().Be(true);
         }
 
         private IServiceProvider SetupServicesAndConfiguration(
-            Action<AppMetricsAspNetHealthOptions> setupHealthAction = null)
+            Action<HealthAspNetCoreOptions> setupHealthAction = null)
         {
             var services = new ServiceCollection();
 
@@ -63,11 +63,11 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.DependencyInjection
 
             if (setupHealthAction == null)
             {
-                healthBuilder.AddAspNetCoreHealth(configuration.GetSection("AppMetricsAspNetHealthOptions"));
+                healthBuilder.AddAspNetCoreHealth(configuration.GetSection("HealthAspNetCoreOptions"));
             }
             else
             {
-                healthBuilder.AddAspNetCoreHealth(configuration.GetSection("AppMetricsAspNetHealthOptions"), setupHealthAction);
+                healthBuilder.AddAspNetCoreHealth(configuration.GetSection("HealthAspNetCoreOptions"), setupHealthAction);
             }
 
             return services.BuildServiceProvider();

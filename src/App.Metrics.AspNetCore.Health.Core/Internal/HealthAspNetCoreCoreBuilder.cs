@@ -1,4 +1,4 @@
-﻿// <copyright file="AppMetricsAspNetCoreHealthCoreBuilder.cs" company="Allan Hardy">
+﻿// <copyright file="HealthAspNetCoreCoreBuilder.cs" company="Allan Hardy">
 // Copyright (c) Allan Hardy. All rights reserved.
 // </copyright>
 
@@ -7,9 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace App.Metrics.AspNetCore.Health.Core.Internal
 {
-    public class AppMetricsAspNetCoreHealthCoreBuilder : IAppMetricsAspNetCoreHealthCoreBuilder
+    public class HealthAspNetCoreCoreBuilder : IHealthAspNetCoreCoreBuilder
     {
-        public AppMetricsAspNetCoreHealthCoreBuilder(IServiceCollection services)
+        public HealthAspNetCoreCoreBuilder(IServiceCollection services)
         {
             Services = services ?? throw new ArgumentNullException(nameof(services));
         }

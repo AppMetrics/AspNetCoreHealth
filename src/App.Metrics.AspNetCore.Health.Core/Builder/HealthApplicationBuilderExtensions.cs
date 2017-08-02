@@ -1,4 +1,4 @@
-﻿// <copyright file="AppMetricsAspNetCoreHealthApplicationBuilderExtensions.cs" company="Allan Hardy">
+﻿// <copyright file="HealthApplicationBuilderExtensions.cs" company="Allan Hardy">
 // Copyright (c) Allan Hardy. All rights reserved.
 // </copyright>
 
@@ -14,7 +14,7 @@ namespace Microsoft.AspNetCore.Builder
     /// <summary>
     /// Extension methods for <see cref="IApplicationBuilder"/> to add App Metrics health to the request execution pipeline.
     /// </summary>
-    public static class AppMetricsAspNetCoreHealthApplicationBuilderExtensions
+    public static class HealthApplicationBuilderExtensions
     {
         /// <summary>
         /// Adds App Metrics Health to the <see cref="IApplicationBuilder"/> request execution pipeline.
@@ -32,7 +32,7 @@ namespace Microsoft.AspNetCore.Builder
             // We use the HealthCheckMarkerService to make sure if all the services were added.
             AppMetricsHealthServicesHelper.ThrowIfHealthChecksNotRegistered(app.ApplicationServices);
 
-            var aspNetMetricsMiddlewareHealthChecksOptions = app.ApplicationServices.GetRequiredService<AppMetricsAspNetHealthOptions>();
+            var aspNetMetricsMiddlewareHealthChecksOptions = app.ApplicationServices.GetRequiredService<HealthAspNetCoreOptions>();
 
             if (aspNetMetricsMiddlewareHealthChecksOptions.HealthEndpointEnabled)
             {

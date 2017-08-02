@@ -17,11 +17,11 @@ namespace App.Metrics.AspNetCore.Health.Core
 {
     public class HealthResponseWriter : IHealthResponseWriter
     {
-        private readonly AppMetricsHealthOptions _healthOptions;
+        private readonly HealthOptions _healthOptions;
 
         public HealthResponseWriter(
-            IOptions<AppMetricsHealthOptions> healthOptionsAccessor,
-            IOptions<AppMetricsAspNetHealthOptions> healthMiddlewareOptionsAccessor)
+            IOptions<HealthOptions> healthOptionsAccessor,
+            IOptions<HealthAspNetCoreOptions> healthMiddlewareOptionsAccessor)
         {
             if (healthOptionsAccessor == null)
             {

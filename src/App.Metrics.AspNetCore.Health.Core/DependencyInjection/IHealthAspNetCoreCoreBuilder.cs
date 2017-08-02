@@ -1,4 +1,4 @@
-﻿// <copyright file="IAppMetricsAspNetCoreHealthCoreBuilder.cs" company="Allan Hardy">
+﻿// <copyright file="IHealthAspNetCoreCoreBuilder.cs" company="Allan Hardy">
 // Copyright (c) Allan Hardy. All rights reserved.
 // </copyright>
 
@@ -6,7 +6,7 @@
 namespace Microsoft.Extensions.DependencyInjection
     // ReSharper restore CheckNamespace
 {
-    public interface IAppMetricsAspNetCoreHealthCoreBuilder
+    public interface IHealthAspNetCoreCoreBuilder
     {
         IServiceCollection Services { get; }
     }

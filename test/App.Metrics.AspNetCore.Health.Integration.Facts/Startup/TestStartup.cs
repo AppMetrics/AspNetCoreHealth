@@ -20,7 +20,7 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.Startup
 
         protected void SetupServices(
             IServiceCollection services,
-            AppMetricsAspNetHealthOptions appMetricsMiddlewareHealthChecksOptions,
+            HealthAspNetCoreOptions healthMiddlewareCoreChecksOptions,
             IEnumerable<HealthCheckResult> healthChecks = null)
         {
             services.AddOptions();
@@ -47,8 +47,8 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.Startup
             healthBuilder.AddAspNetCoreHealth(
                 options =>
                 {
-                    options.HealthEndpointEnabled = appMetricsMiddlewareHealthChecksOptions.HealthEndpointEnabled;
-                    options.HealthEndpoint = appMetricsMiddlewareHealthChecksOptions.HealthEndpoint;
+                    options.HealthEndpointEnabled = healthMiddlewareCoreChecksOptions.HealthEndpointEnabled;
+                    options.HealthEndpoint = healthMiddlewareCoreChecksOptions.HealthEndpoint;
                 });
         }
     }

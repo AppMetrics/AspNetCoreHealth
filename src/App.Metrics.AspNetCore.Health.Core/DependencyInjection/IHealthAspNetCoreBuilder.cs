@@ -1,4 +1,4 @@
-﻿// <copyright file="IAppMetricsAspNetCoreHealthBuilder.cs" company="Allan Hardy">
+﻿// <copyright file="IHealthAspNetCoreBuilder.cs" company="Allan Hardy">
 // Copyright (c) Allan Hardy. All rights reserved.
 // </copyright>
 
@@ -9,7 +9,7 @@ namespace Microsoft.Extensions.DependencyInjection
     /// <summary>
     ///     Provides extensiblity on App Metrics middleware e.g. serialization options on supported endpoints.
     /// </summary>
-    public interface IAppMetricsAspNetCoreHealthBuilder
+    public interface IHealthAspNetCoreBuilder
     {
         IServiceCollection Services { get; }
     }

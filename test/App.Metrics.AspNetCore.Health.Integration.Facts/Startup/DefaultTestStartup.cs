@@ -19,7 +19,7 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.Startup
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var appMetricsMiddlewareHealthChecksOptions = new AppMetricsAspNetHealthOptions
+            var appMetricsMiddlewareHealthChecksOptions = new HealthAspNetCoreOptions
             {
                                                   HealthEndpointEnabled = true,
                                               };

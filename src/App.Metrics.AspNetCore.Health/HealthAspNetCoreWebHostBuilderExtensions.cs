@@ -1,4 +1,4 @@
-﻿// <copyright file="AppMetricsAspNetCoreHealthWebHostBuilderExtensions.cs" company="Allan Hardy">
+﻿// <copyright file="HealthAspNetCoreWebHostBuilderExtensions.cs" company="Allan Hardy">
 // Copyright (c) Allan Hardy. All rights reserved.
 // </copyright>
 
@@ -13,7 +13,7 @@ namespace Microsoft.AspNetCore.Hosting
     /// <summary>
     /// Extension methods for <see cref="IWebHostBuilder"/> to add App Metrics health to the request execution pipeline.
     /// </summary>
-    public static class AppMetricsAspNetCoreHealthWebHostBuilderExtensions
+    public static class HealthAspNetCoreWebHostBuilderExtensions
     {
         /// <summary>
         ///     Adds App Metrics Health Checks Middleware to the <see cref="T:Microsoft.AspNetCore.Hosting.IWebHostBuilder" /> request
@@ -33,8 +33,8 @@ namespace Microsoft.AspNetCore.Hosting
 
             builder.ConfigureServices((context, services) =>
             {
-                services.AddHealth(context.Configuration.GetSection("AppMetricsHealthOptions"));
-                services.AddAspNetCoreHealthCore(context.Configuration.GetSection("AppMetricsAspNetHealthOptions"));
+                services.AddHealth(context.Configuration.GetSection("HealthOptions"));
+                services.AddAspNetCoreHealthCore(context.Configuration.GetSection("HealthAspNetCoreOptions"));
                 services.AddSingleton<IStartupFilter>(new HealthStartupFilter());
             });
 

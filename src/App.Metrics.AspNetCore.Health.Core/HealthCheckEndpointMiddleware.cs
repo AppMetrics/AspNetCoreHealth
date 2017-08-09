@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using App.Metrics.Health;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace App.Metrics.AspNetCore.Health.Core
 {
@@ -22,13 +23,13 @@ namespace App.Metrics.AspNetCore.Health.Core
 
         public HealthCheckEndpointMiddleware(
             RequestDelegate next,
-            HealthAspNetCoreOptions appMiddlewareOptions,
+            IOptions<HealthAspNetCoreOptions> appMiddlewareOptionsAccessor,
             ILoggerFactory loggerFactory,
             IProvideHealth health,
             IHealthResponseWriter healthResponseWriter)
         {
             _next = next;
-            _appMiddlewareOptions = appMiddlewareOptions;
+            _appMiddlewareOptions = appMiddlewareOptionsAccessor.Value;
             _health = health;
             _logger = loggerFactory.CreateLogger<HealthCheckEndpointMiddleware>();
             _healthResponseWriter = healthResponseWriter ?? throw new ArgumentNullException(nameof(healthResponseWriter));

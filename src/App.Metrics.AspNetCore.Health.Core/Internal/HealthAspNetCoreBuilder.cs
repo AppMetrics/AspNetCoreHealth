@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace App.Metrics.AspNetCore.Health.Core.Internal
 {
-    public sealed class HealthAspNetCoreBuilder : IHealthAspNetCoreBuilder
+    public class HealthAspNetCoreBuilder : IHealthAspNetCoreBuilder
     {
         public HealthAspNetCoreBuilder(IServiceCollection services)
         {

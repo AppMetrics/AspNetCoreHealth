@@ -4,7 +4,6 @@
 
 using System;
 using System.Net;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using App.Metrics.Health;
@@ -40,7 +39,6 @@ namespace App.Metrics.AspNetCore.Health.Core
         {
             var acceptHeaderMediaType = context.Request.GetTypedHeaders();
             var formatter = default(IHealthOutputFormatter);
-            var encoding = Encoding.Default;
 
             context.SetNoCacheHeaders();
 
@@ -49,12 +47,6 @@ namespace App.Metrics.AspNetCore.Health.Core
                 foreach (var accept in acceptHeaderMediaType.Accept)
                 {
                     formatter = ResolveFormatter(_healthOptions.OutputFormatters, accept);
-
-                    if (formatter != default(IHealthOutputFormatter))
-                    {
-                        encoding = accept.Encoding ?? encoding;
-                        break;
-                    }
                 }
             }
 
@@ -73,7 +65,7 @@ namespace App.Metrics.AspNetCore.Health.Core
 
             context.Response.Headers[HeaderNames.ContentType] = new[] { formatter.MediaType.ContentType };
 
-            return formatter.WriteAsync(context.Response.Body, healthStatus, encoding, token);
+            return formatter.WriteAsync(context.Response.Body, healthStatus, token);
         }
 
         private static IHealthOutputFormatter ResolveFormatter(HealthFormatterCollection formatters, MediaTypeHeaderValue acceptHeader)
@@ -94,7 +86,7 @@ namespace App.Metrics.AspNetCore.Health.Core
                 return default(IHealthOutputFormatter);
             }
 
-            var mediaTypeValue = new AppMetricsHealthMediaTypeValue(
+            var mediaTypeValue = new HealthMediaTypeValue(
                 acceptHeader.Type.Value,
                 versionAndFormatTokens[0],
                 versionAndFormat[0],

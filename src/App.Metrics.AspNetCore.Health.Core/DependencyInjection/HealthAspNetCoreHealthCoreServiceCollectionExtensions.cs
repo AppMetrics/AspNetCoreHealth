@@ -127,10 +127,22 @@ namespace Microsoft.Extensions.DependencyInjection
 
         internal static void AddAppMetricsAspNetCoreHealthServices(IServiceCollection services)
         {
-            services.TryAddSingleton<HealthAspNetCoreMarkerService, HealthAspNetCoreMarkerService>();
+            //
+            // Options
+            //
+            var healthOptionsSetupDescriptor =
+                ServiceDescriptor.Transient<IConfigureOptions<HealthAspNetCoreOptions>, HealthAspNetCoreHealthAspNetCoreOptionsSetup>();
+            services.TryAddEnumerable(healthOptionsSetupDescriptor);
+
+            //
+            // Response Writers
+            //
             services.TryAddSingleton<IHealthResponseWriter, HealthResponseWriter>();
-            services.TryAddEnumerable(ServiceDescriptor.Transient<IConfigureOptions<HealthAspNetCoreOptions>, HealthAspNetCoreHealthAspNetCoreOptionsSetup>());
-            services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<HealthAspNetCoreOptions>>().Value);
+
+            //
+            // Random Infrastructure
+            //
+            services.TryAddSingleton<HealthAspNetCoreMarkerService, HealthAspNetCoreMarkerService>();
         }
 
         private static void ConfigureDefaultServices(IServiceCollection services)

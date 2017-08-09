@@ -6,6 +6,7 @@ using System;
 using App.Metrics.AspNetCore.Health.Core;
 using App.Metrics.Health.DependencyInjection.Internal;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 // ReSharper disable CheckNamespace
 namespace Microsoft.AspNetCore.Builder
@@ -32,9 +33,9 @@ namespace Microsoft.AspNetCore.Builder
             // We use the HealthCheckMarkerService to make sure if all the services were added.
             AppMetricsHealthServicesHelper.ThrowIfHealthChecksNotRegistered(app.ApplicationServices);
 
-            var aspNetMetricsMiddlewareHealthChecksOptions = app.ApplicationServices.GetRequiredService<HealthAspNetCoreOptions>();
+            var optionsAccessor = app.ApplicationServices.GetRequiredService<IOptions<HealthAspNetCoreOptions>>();
 
-            if (aspNetMetricsMiddlewareHealthChecksOptions.HealthEndpointEnabled)
+            if (optionsAccessor.Value.HealthEndpointEnabled)
             {
                 app.UseMiddleware<HealthCheckEndpointMiddleware>();
             }

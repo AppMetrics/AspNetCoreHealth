@@ -7,6 +7,7 @@ using App.Metrics.AspNetCore.Health.Core;
 using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Xunit;
 
 namespace App.Metrics.AspNetCore.Health.Integration.Facts.DependencyInjection
@@ -26,7 +27,7 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.DependencyInjection
             var options = new HealthAspNetCoreOptions();
             var provider = SetupServicesAndConfiguration();
 
-            Action resolveOptions = () => { options = provider.GetRequiredService<HealthAspNetCoreOptions>(); };
+            Action resolveOptions = () => { options = provider.GetRequiredService<IOptions<HealthAspNetCoreOptions>>().Value; };
 
             resolveOptions.ShouldNotThrow();
             options.HealthEndpoint.Should().Be("/health-test");
@@ -40,7 +41,7 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.DependencyInjection
             var provider = SetupServicesAndConfiguration(
                 (o) => { o.HealthEndpointEnabled = true; });
 
-            Action resolveOptions = () => { options = provider.GetRequiredService<HealthAspNetCoreOptions>(); };
+            Action resolveOptions = () => { options = provider.GetRequiredService<IOptions<HealthAspNetCoreOptions>>().Value; };
 
             resolveOptions.ShouldNotThrow();
             options.HealthEndpointEnabled.Should().Be(true);

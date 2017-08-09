@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using App.Metrics.Health;
 
-namespace App.Metrics.Sandbox.HealthChecks
+namespace HealthSandboxMvc.HealthChecks
 {
     public class SampleHealthCheck : HealthCheck
     {

@@ -2,13 +2,11 @@
 // Copyright (c) Allan Hardy. All rights reserved.
 // </copyright>
 
-using System;
-using App.Metrics.Health;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace App.Metrics.Sandbox
+namespace HealthSandboxMvc
 {
     public class Startup
     {

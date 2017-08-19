@@ -7,10 +7,13 @@ namespace Microsoft.Extensions.DependencyInjection
     // ReSharper restore CheckNamespace
 {
     /// <summary>
-    ///     Provides extensiblity on App Metrics middleware e.g. serialization options on supported endpoints.
+    ///     An interface for configuring App Metrics AspNet Core health services.
     /// </summary>
     public interface IHealthAspNetCoreBuilder
     {
+        /// <summary>
+        ///     Gets the <see cref="IServiceCollection"/> where App Metrics services are configured.
+        /// </summary>
         IServiceCollection Services { get; }
     }
 }

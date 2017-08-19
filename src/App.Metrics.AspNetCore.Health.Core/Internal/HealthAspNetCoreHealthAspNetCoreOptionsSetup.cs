@@ -6,10 +6,13 @@ using Microsoft.Extensions.Options;
 
 namespace App.Metrics.AspNetCore.Health.Core.Internal
 {
-    public class HealthAspNetCoreHealthAspNetCoreOptionsSetup : IConfigureOptions<HealthAspNetCoreOptions>
+    /// <summary>
+    ///     Sets up default health endpoint options for <see cref="HealthEndpointOptions"/>.
+    /// </summary>
+    public class HealthAspNetCoreHealthAspNetCoreOptionsSetup : IConfigureOptions<HealthEndpointOptions>
     {
         /// <inheritdoc />
-        public void Configure(HealthAspNetCoreOptions options)
+        public void Configure(HealthEndpointOptions options)
         {
         }
     }

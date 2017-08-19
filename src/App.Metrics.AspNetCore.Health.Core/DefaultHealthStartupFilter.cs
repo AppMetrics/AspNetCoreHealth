@@ -1,4 +1,4 @@
-﻿// <copyright file="HealthStartupFilter.cs" company="Allan Hardy">
+﻿// <copyright file="DefaultHealthStartupFilter.cs" company="Allan Hardy">
 // Copyright (c) Allan Hardy. All rights reserved.
 // </copyright>
 
@@ -8,16 +8,18 @@ using Microsoft.AspNetCore.Hosting;
 
 namespace App.Metrics.AspNetCore.Health.Core
 {
-    public class HealthStartupFilter : IStartupFilter
+    public class DefaultHealthStartupFilter : IStartupFilter
     {
         public Action<IApplicationBuilder> Configure(Action<IApplicationBuilder> next)
         {
-            return app =>
-            {
-                app.UseHealth();
+            return AddHealth;
 
-                next(app);
-            };
+            void AddHealth(IApplicationBuilder builder)
+            {
+                builder.UseHealth();
+
+                next(builder);
+            }
         }
     }
 }

@@ -24,31 +24,31 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.DependencyInjection
         [Fact]
         public void Can_load_settings_from_configuration()
         {
-            var options = new HealthAspNetCoreOptions();
+            var options = new HealthEndpointOptions();
             var provider = SetupServicesAndConfiguration();
 
-            Action resolveOptions = () => { options = provider.GetRequiredService<IOptions<HealthAspNetCoreOptions>>().Value; };
+            Action resolveOptions = () => { options = provider.GetRequiredService<IOptions<HealthEndpointOptions>>().Value; };
 
             resolveOptions.ShouldNotThrow();
-            options.HealthEndpoint.Should().Be("/health-test");
-            options.HealthEndpointEnabled.Should().Be(false);
+            options.Endpoint.Should().Be("/health-test");
+            options.Enabled.Should().Be(false);
         }
 
         [Fact]
         public void Can_override_settings_from_configuration()
         {
-            var options = new HealthAspNetCoreOptions();
+            var options = new HealthEndpointOptions();
             var provider = SetupServicesAndConfiguration(
-                (o) => { o.HealthEndpointEnabled = true; });
+                (o) => { o.Enabled = true; });
 
-            Action resolveOptions = () => { options = provider.GetRequiredService<IOptions<HealthAspNetCoreOptions>>().Value; };
+            Action resolveOptions = () => { options = provider.GetRequiredService<IOptions<HealthEndpointOptions>>().Value; };
 
             resolveOptions.ShouldNotThrow();
-            options.HealthEndpointEnabled.Should().Be(true);
+            options.Enabled.Should().Be(true);
         }
 
         private IServiceProvider SetupServicesAndConfiguration(
-            Action<HealthAspNetCoreOptions> setupHealthAction = null)
+            Action<HealthEndpointOptions> setupHealthAction = null)
         {
             var services = new ServiceCollection();
 
@@ -64,11 +64,11 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.DependencyInjection
 
             if (setupHealthAction == null)
             {
-                healthBuilder.AddAspNetCoreHealth(configuration.GetSection("HealthAspNetCoreOptions"));
+                healthBuilder.AddAspNetCoreHealth(configuration.GetSection(nameof(HealthEndpointOptions)));
             }
             else
             {
-                healthBuilder.AddAspNetCoreHealth(configuration.GetSection("HealthAspNetCoreOptions"), setupHealthAction);
+                healthBuilder.AddAspNetCoreHealth(configuration.GetSection(nameof(HealthEndpointOptions)), setupHealthAction);
             }
 
             return services.BuildServiceProvider();

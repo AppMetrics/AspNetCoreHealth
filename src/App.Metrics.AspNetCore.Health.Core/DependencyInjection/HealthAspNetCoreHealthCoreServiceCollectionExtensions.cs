@@ -37,7 +37,7 @@ namespace Microsoft.Extensions.DependencyInjection
         ///     Adds essential App Metrics AspNet Core health services to the specified <see cref="IServiceCollection" />.
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection" /> to add services to.</param>
-        /// <param name="configuration">The <see cref="IConfiguration" /> from where to load <see cref="HealthAspNetCoreOptions" />.</param>
+        /// <param name="configuration">The <see cref="IConfiguration" /> from where to load <see cref="HealthEndpointOptions" />.</param>
         /// <returns>
         ///     An <see cref="IHealthAspNetCoreCoreBuilder" /> that can be used to further configure the App Metrics AspNet Core health
         ///     services.
@@ -48,7 +48,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             var coreBuilder = services.AddAspNetCoreHealthCore();
 
-            services.Configure<HealthAspNetCoreOptions>(configuration);
+            services.Configure<HealthEndpointOptions>(configuration);
 
             return coreBuilder;
         }
@@ -57,9 +57,9 @@ namespace Microsoft.Extensions.DependencyInjection
         ///     Adds essential App Metrics AspNet Core health services to the specified <see cref="IServiceCollection" />.
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection" /> to add services to.</param>
-        /// <param name="configuration">The <see cref="IConfiguration" /> from where to load <see cref="HealthAspNetCoreOptions" />.</param>
+        /// <param name="configuration">The <see cref="IConfiguration" /> from where to load <see cref="HealthEndpointOptions" />.</param>
         /// <param name="setupAction">
-        ///     An <see cref="Action{HealthAspNetCoreOptions}" /> to configure the provided <see cref="HealthAspNetCoreOptions" />.
+        ///     An <see cref="Action{HealthEndpointOptions}" /> to configure the provided <see cref="HealthEndpointOptions" />.
         /// </param>
         /// <returns>
         ///     An <see cref="IHealthAspNetCoreCoreBuilder" /> that can be used to further configure the App Metrics AspNet Core health
@@ -68,11 +68,11 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IHealthAspNetCoreCoreBuilder AddAspNetCoreHealthCore(
             this IServiceCollection services,
             IConfiguration configuration,
-            Action<HealthAspNetCoreOptions> setupAction)
+            Action<HealthEndpointOptions> setupAction)
         {
             var coreBuilder = services.AddAspNetCoreHealthCore();
 
-            services.Configure<HealthAspNetCoreOptions>(configuration);
+            services.Configure<HealthEndpointOptions>(configuration);
             services.Configure(setupAction);
 
             return coreBuilder;
@@ -83,22 +83,22 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection" /> to add services to.</param>
         /// <param name="setupAction">
-        ///     An <see cref="Action{HealthAspNetCoreOptions}" /> to configure the provided <see cref="HealthAspNetCoreOptions" />.
+        ///     An <see cref="Action{HealthEndpointOptions}" /> to configure the provided <see cref="HealthEndpointOptions" />.
         /// </param>
-        /// <param name="configuration">The <see cref="IConfiguration" /> from where to load <see cref="HealthAspNetCoreOptions" />.</param>
+        /// <param name="configuration">The <see cref="IConfiguration" /> from where to load <see cref="HealthEndpointOptions" />.</param>
         /// <returns>
         ///     An <see cref="IHealthAspNetCoreCoreBuilder" /> that can be used to further configure the App Metrics AspNet Core health
         ///     services.
         /// </returns>
         public static IHealthAspNetCoreCoreBuilder AddAspNetCoreHealthCore(
             this IServiceCollection services,
-            Action<HealthAspNetCoreOptions> setupAction,
+            Action<HealthEndpointOptions> setupAction,
             IConfiguration configuration)
         {
             var coreBuilder = services.AddAspNetCoreHealthCore();
 
             services.Configure(setupAction);
-            services.Configure<HealthAspNetCoreOptions>(configuration);
+            services.Configure<HealthEndpointOptions>(configuration);
 
             return coreBuilder;
         }
@@ -108,7 +108,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection" /> to add services to.</param>
         /// <param name="setupAction">
-        ///     An <see cref="Action{HealthAspNetCoreOptions}" /> to configure the provided <see cref="HealthAspNetCoreOptions" />.
+        ///     An <see cref="Action{HealthEndpointOptions}" /> to configure the provided <see cref="HealthEndpointOptions" />.
         /// </param>
         /// <returns>
         ///     An <see cref="IHealthAspNetCoreCoreBuilder" /> that can be used to further configure the App Metrics AspNet Core health
@@ -116,7 +116,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </returns>
         public static IHealthAspNetCoreCoreBuilder AddAspNetCoreHealthCore(
             this IServiceCollection services,
-            Action<HealthAspNetCoreOptions> setupAction)
+            Action<HealthEndpointOptions> setupAction)
         {
             var coreBuilder = services.AddAspNetCoreHealthCore();
 
@@ -131,13 +131,13 @@ namespace Microsoft.Extensions.DependencyInjection
             // Options
             //
             var healthOptionsSetupDescriptor =
-                ServiceDescriptor.Transient<IConfigureOptions<HealthAspNetCoreOptions>, HealthAspNetCoreHealthAspNetCoreOptionsSetup>();
+                ServiceDescriptor.Transient<IConfigureOptions<HealthEndpointOptions>, HealthAspNetCoreHealthAspNetCoreOptionsSetup>();
             services.TryAddEnumerable(healthOptionsSetupDescriptor);
 
             //
             // Response Writers
             //
-            services.TryAddSingleton<IHealthResponseWriter, HealthResponseWriter>();
+            services.TryAddSingleton<IHealthResponseWriter, DefaultHealthResponseWriter>();
 
             //
             // Random Infrastructure

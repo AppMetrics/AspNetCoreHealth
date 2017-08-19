@@ -4,6 +4,7 @@
 
 using System;
 using App.Metrics.AspNetCore.Health;
+using App.Metrics.Health;
 using App.Metrics.Health.Formatters.Ascii;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
@@ -31,7 +32,15 @@ namespace HealthSandboxMvc
                     endpointsOptions.Endpoint = "/health2";
                 };
 
-                options.HealthOptions = metricsOptions => { metricsOptions.Enabled = true; };
+                options.HealthOptions = healthOptions =>
+                {
+                    healthOptions.Enabled = true;
+                    healthOptions.Checks.AddProcessPrivateMemorySizeCheck("Private Memory Size", 200);
+                    healthOptions.Checks.AddProcessVirtualMemorySizeCheck("Virtual Memory Size", 200);
+                    healthOptions.Checks.AddProcessPhysicalMemoryCheck("Working Set", 200);
+                    healthOptions.Checks.AddPingCheck("google ping", "google.com", TimeSpan.FromSeconds(10));
+                    healthOptions.Checks.AddHttpGetCheck("github", new Uri("https://github.com/"), TimeSpan.FromSeconds(10));
+                };
             };
         }
     }

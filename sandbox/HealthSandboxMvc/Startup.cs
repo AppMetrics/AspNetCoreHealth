@@ -18,16 +18,6 @@ namespace HealthSandboxMvc
 
         public void ConfigureServices(IServiceCollection services)
         {
-            // services.AddHealth(
-            //     options =>
-            //     {
-            //         options.Checks.AddProcessPrivateMemorySizeCheck("Private Memory Size", 200);
-            //         options.Checks.AddProcessVirtualMemorySizeCheck("Virtual Memory Size", 200);
-            //         options.Checks.AddProcessPhysicalMemoryCheck("Working Set", 200);
-            //         options.Checks.AddPingCheck("google ping", "google.com", TimeSpan.FromSeconds(10));
-            //         options.Checks.AddHttpGetCheck("github", new Uri("https://github.com/"), TimeSpan.FromSeconds(10));
-            //     });
-
             services.AddMvc();
         }
     }

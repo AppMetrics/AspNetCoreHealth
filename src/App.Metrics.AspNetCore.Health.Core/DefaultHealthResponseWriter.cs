@@ -71,20 +71,20 @@ namespace App.Metrics.AspNetCore.Health.Core
 
         private static void SetResponseStatusCode(HttpContext context, HealthStatus healthStatus)
         {
-            var responseStatusCode = HttpStatusCode.OK;
+            var responseStatusCode = StatusCodes.Status200OK;
 
             if (healthStatus.Status.IsUnhealthy())
             {
-                responseStatusCode = HttpStatusCode.ServiceUnavailable;
+                responseStatusCode = StatusCodes.Status500InternalServerError;
             }
 
             if (healthStatus.Status.IsDegraded())
             {
-                responseStatusCode = HttpStatusCode.OK;
+                responseStatusCode = StatusCodes.Status200OK;
                 context.Response.Headers[HeaderNames.Warning] = new[] { "Warning: 100 'Degraded'" };
             }
 
-            context.Response.StatusCode = (int)responseStatusCode;
+            context.Response.StatusCode = responseStatusCode;
         }
     }
 }

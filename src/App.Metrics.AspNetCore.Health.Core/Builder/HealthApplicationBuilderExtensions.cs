@@ -72,7 +72,7 @@ namespace Microsoft.AspNetCore.Builder
                 appBuilder =>
                 {
                     var responseWriter = GetHealthResponseWriter(appBuilder.ApplicationServices, formatter);
-                    appBuilder.UseMiddleware<HealthCheckEndpointMiddleware>(responseWriter);
+                    appBuilder.UseMiddleware<HealthCheckEndpointMiddleware>(responseWriter, endpointsOptionsAccessor.Value.Timeout);
                 });
         }
 

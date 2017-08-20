@@ -17,6 +17,11 @@ namespace Microsoft.Extensions.Logging
             logger.LogTrace(AppMetricsEventIds.Middleware.MiddlewareExecutedId, $"Executed AspNet Metrics Middleware Health Checks {middleware.FullName}");
         }
 
+        public static void MiddlewareFailed(this ILogger logger, Type middleware, Exception e, string message)
+        {
+            logger.LogError(AppMetricsEventIds.Middleware.MiddlewareErrorId, e, $"[{middleware.FullName}] {message}");
+        }
+
         public static void MiddlewareExecuting(this ILogger logger, Type middleware)
         {
             logger.LogTrace(AppMetricsEventIds.Middleware.MiddlewareExecutingId, $"Executing AspNet Metrics Middleware Health Checks {middleware.FullName}");
@@ -28,6 +33,7 @@ namespace Microsoft.Extensions.Logging
             {
                 public const int MiddlewareExecutedId = MiddlewareStart + 1;
                 public const int MiddlewareExecutingId = MiddlewareStart + 2;
+                public const int MiddlewareErrorId = MiddlewareStart + 3;
                 private const int MiddlewareStart = 3000;
             }
         }

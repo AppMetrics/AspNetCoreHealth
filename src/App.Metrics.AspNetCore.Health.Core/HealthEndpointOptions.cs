@@ -10,18 +10,7 @@ namespace App.Metrics.AspNetCore.Health.Core
 {
     public class HealthEndpointOptions
     {
-        public HealthEndpointOptions()
-        {
-            Enabled = true;
-        }
-
-        /// <summary>
-        ///     Gets or sets the health endpoint, defaults to /health.
-        /// </summary>
-        /// <value>
-        ///     The health endpoint.
-        /// </value>
-        public string Endpoint { get; set; } = HealthMiddlewareConstants.DefaultRoutePaths.HealthEndpoint.EnsureLeadingSlash();
+        public HealthEndpointOptions() { Enabled = true; }
 
         /// <summary>
         ///     Gets or sets a value indicating whether [health endpoint should be enabled], if disabled endpoint responds with
@@ -33,9 +22,12 @@ namespace App.Metrics.AspNetCore.Health.Core
         public bool Enabled { get; set; }
 
         /// <summary>
-        /// Gets or sets the port to host the health endpoint.
+        ///     Gets or sets the health endpoint, defaults to /health.
         /// </summary>
-        public int? Port { get; set; }
+        /// <value>
+        ///     The health endpoint.
+        /// </value>
+        public string Endpoint { get; set; } = HealthMiddlewareConstants.DefaultRoutePaths.HealthEndpoint.EnsureLeadingSlash();
 
         /// <summary>
         ///     Gets or sets the <see cref="IHealthOutputFormatter" /> used to write the health status when the health endpoint is
@@ -45,5 +37,15 @@ namespace App.Metrics.AspNetCore.Health.Core
         ///     The <see cref="IHealthOutputFormatter" /> used to write metrics.
         /// </value>
         public IHealthOutputFormatter EndpointOutputFormatter { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the port to host the health endpoint.
+        /// </summary>
+        public int? Port { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the timeout when reading health checks via the health endpoint.
+        /// </summary>
+        public TimeSpan Timeout { get; set; }
     }
 }

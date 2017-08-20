@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="App.Metrics.Health.Core" Version="$(AppMetricsHealthVersion)" />
+    <PackageReference Include="App.Metrics.Health.Core" Version="2.0.0-alpha-0041" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="$(AspNetCoreVersion)" />
     <PackageReference Include="Microsoft.AspNetCore.Routing" Version="$(AspNetCoreVersion)" />
   </ItemGroup>

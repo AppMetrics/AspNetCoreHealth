@@ -69,7 +69,7 @@ namespace App.Metrics.AspNetCore.Health.Core
                     }
 
                     context.SetNoCacheHeaders();
-                    context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                    context.Response.StatusCode = StatusCodes.Status503ServiceUnavailable;
                     context.Response.Headers[HeaderNames.ContentType] = new[] { context.Request.ContentType };
                 }
             }

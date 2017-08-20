@@ -75,7 +75,7 @@ namespace App.Metrics.AspNetCore.Health.Core
 
             if (healthStatus.Status.IsUnhealthy())
             {
-                responseStatusCode = StatusCodes.Status500InternalServerError;
+                responseStatusCode = StatusCodes.Status503ServiceUnavailable;
             }
 
             if (healthStatus.Status.IsDegraded())

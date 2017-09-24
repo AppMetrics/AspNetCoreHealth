@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using App.Metrics.Health;
 using Microsoft.AspNetCore.Http;
 
+// ReSharper disable CheckNamespace
 namespace App.Metrics.AspNetCore.Health
+    // ReSharper restore CheckNamespace
 {
     public interface IHealthResponseWriter
     {

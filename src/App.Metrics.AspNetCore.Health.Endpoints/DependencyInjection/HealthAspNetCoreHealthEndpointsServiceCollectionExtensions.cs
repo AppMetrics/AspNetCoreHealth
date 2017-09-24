@@ -3,10 +3,15 @@
 // </copyright>
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using App.Metrics.AspNetCore.Health;
 using App.Metrics.AspNetCore.Health.Core;
+using App.Metrics.AspNetCore.Health.Core.Internal.NoOp;
 using App.Metrics.AspNetCore.Health.Endpoints;
 using App.Metrics.AspNetCore.Health.Endpoints.Internal;
+using App.Metrics.Health;
+using App.Metrics.Health.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
@@ -182,16 +187,30 @@ namespace Microsoft.Extensions.DependencyInjection
 
         internal static void AddHealthEndpointsServices(IServiceCollection services)
         {
-            //
-            // Options
-            //
             var endpointOptionsDescriptor = ServiceDescriptor.Singleton<IConfigureOptions<HealthEndpointOptions>, HealthEndpointsOptionsSetup>();
             services.TryAddEnumerable(endpointOptionsDescriptor);
 
-            //
-            // Response Writers
-            //
-            services.TryAddSingleton<IHealthResponseWriter, DefaultHealthResponseWriter>();
+            services.TryAddSingleton<IHealthResponseWriter>(provider => ResolveHealthResponseWriter(provider));
+        }
+
+        internal static IHealthResponseWriter ResolveHealthResponseWriter(IServiceProvider provider, IHealthOutputFormatter formatter = null)
+        {
+            var endpointOptions = provider.GetRequiredService<IOptions<HealthEndpointOptions>>();
+            var health = provider.GetRequiredService<IHealthRoot>();
+
+            if (health.Options.Enabled && endpointOptions.Value.HealthEndpointEnabled && health.OutputHealthFormatters.Any())
+            {
+                if (formatter == null)
+                {
+                    var fallbackFormatter = endpointOptions.Value.HealthEndpointOutputFormatter ?? health.DefaultOutputHealthFormatter;
+
+                    return new DefaultHealthResponseWriter(fallbackFormatter, health.OutputHealthFormatters);
+                }
+
+                return new DefaultHealthResponseWriter(formatter, health.OutputHealthFormatters);
+            }
+
+            return new NoOpHealthStatusResponseWriter();
         }
     }
 }

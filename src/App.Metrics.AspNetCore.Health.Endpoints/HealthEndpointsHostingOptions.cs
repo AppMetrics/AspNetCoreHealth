@@ -3,7 +3,7 @@
 // </copyright>
 
 using System;
-using App.Metrics.AspNetCore.Endpoints.Internal;
+using App.Metrics.AspNetCore.Health.Endpoints.Internal;
 
 namespace App.Metrics.AspNetCore.Health.Endpoints
 {

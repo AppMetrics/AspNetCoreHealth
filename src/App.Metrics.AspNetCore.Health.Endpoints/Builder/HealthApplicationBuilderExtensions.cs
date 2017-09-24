@@ -3,8 +3,6 @@
 // </copyright>
 
 using System;
-using System.Collections.Generic;
-using App.Metrics.AspNetCore.Health.Core;
 using App.Metrics.AspNetCore.Health.Endpoints;
 using App.Metrics.AspNetCore.Health.Endpoints.Middleware;
 using App.Metrics.Health;
@@ -80,21 +78,6 @@ namespace Microsoft.AspNetCore.Builder
             AppMetricsHealthServicesHelper.ThrowIfMetricsNotRegistered(app.ApplicationServices);
         }
 
-        private static DefaultHealthResponseWriter GetHealthResponseWriter(
-            IServiceProvider serviceProvider,
-            IHealthOutputFormatter formatter = null)
-        {
-            var formatters = serviceProvider.GetRequiredService<IReadOnlyCollection<IHealthOutputFormatter>>();
-
-            if (formatter != null)
-            {
-                return new DefaultHealthResponseWriter(formatter, formatters);
-            }
-
-            var options = serviceProvider.GetRequiredService<IOptions<HealthEndpointOptions>>();
-            return new DefaultHealthResponseWriter(options.Value.HealthEndpointOutputFormatter, formatters);
-        }
-
         private static bool ShouldUseHealthEndpoint(
             IOptions<HealthEndpointsHostingOptions> endpointsHostingOptionsAccessor,
             IOptions<HealthEndpointOptions> endpointsOptionsAccessor,
@@ -128,7 +111,7 @@ namespace Microsoft.AspNetCore.Builder
                 context => ShouldUseHealthEndpoint(endpointsHostingOptionsAccessor, endpointsOptionsAccessor, metricsOptions, context),
                 appBuilder =>
                 {
-                    var responseWriter = GetHealthResponseWriter(app.ApplicationServices, formatter);
+                    var responseWriter = HealthAspNetCoreHealthEndpointsServiceCollectionExtensions.ResolveHealthResponseWriter(app.ApplicationServices, formatter);
                     appBuilder.UseMiddleware<HealthCheckEndpointMiddleware>(responseWriter, endpointsOptionsAccessor.Value.Timeout);
                 });
         }

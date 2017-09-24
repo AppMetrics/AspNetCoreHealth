@@ -28,8 +28,7 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.Startup
             IEnumerable<HealthCheckResult> healthChecks = null)
         {
             services.AddOptions();
-            services.AddLogging()
-                .AddRouting(options => { options.LowercaseUrls = true; });
+            services.AddLogging();
 
             // TODO: scan for healthchecks
             // var startupAssemblyName = typeof(TestStartup).Assembly.GetName().Name;

@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="App.Metrics.Health" Version="2.0.0-alpha-0048" />
+    <PackageReference Include="App.Metrics.Health" Version="$(AppMetricsHealthVersion)" />
   </ItemGroup>
 
   <ItemGroup>

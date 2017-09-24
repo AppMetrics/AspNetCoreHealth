@@ -19,14 +19,14 @@ namespace Microsoft.Net.Http.Headers
                 || mediaTypeHeaderValue.SubType.Value.IsMissing()
                 || versionAndFormatTokens.Length != 2)
             {
-                return default(HealthMediaTypeValue);
+                return default;
             }
 
             var versionAndFormat = versionAndFormatTokens[1].Split('+');
 
             if (versionAndFormat.Length != 2)
             {
-                return default(HealthMediaTypeValue);
+                return default;
             }
 
             return new HealthMediaTypeValue(

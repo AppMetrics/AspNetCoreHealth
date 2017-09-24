@@ -11,6 +11,6 @@ namespace App.Metrics.AspNetCore.Health
 {
     public interface IHealthResponseWriter
     {
-        Task WriteAsync(HttpContext context, HealthStatus healthStatus, CancellationToken token = default(CancellationToken));
+        Task WriteAsync(HttpContext context, HealthStatus healthStatus, CancellationToken token = default);
     }
 }

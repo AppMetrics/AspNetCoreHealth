@@ -3,7 +3,7 @@
 // </copyright>
 
 using System;
-using App.Metrics.AspNetCore.Health.Core;
+using App.Metrics.AspNetCore.Health.Endpoints;
 using App.Metrics.Health;
 
 namespace App.Metrics.AspNetCore.Health
@@ -25,7 +25,7 @@ namespace App.Metrics.AspNetCore.Health
         public Action<HealthOptions> HealthOptions { get; set; }
 
         /// <summary>
-        ///     Gets or sets <see cref="Action{EndpointOptions}" /> to configure the provided <see cref="EndpointOptions" />.
+        ///     Gets or sets <see cref="Action{HealthEndpointOptions}" /> to configure the provided <see cref="EndpointOptions" />.
         /// </summary>
         public Action<HealthEndpointOptions> EndpointOptions { get; set; }
     }

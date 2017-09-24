@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.3
+VisualStudioVersion = 15.0.26906.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2D805782-756E-4C98-B22E-F502BEE95318}"
 EndProject
@@ -57,6 +57,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Metrics.AspNetCore.Heal
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthSandboxMvc", "sandbox\HealthSandboxMvc\HealthSandboxMvc.csproj", "{D3A46A93-5920-4EFC-8A93-A9499AC271CB}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Metrics.AspNetCore.Health.Hosting", "src\App.Metrics.AspNetCore.Health.Hosting\App.Metrics.AspNetCore.Health.Hosting.csproj", "{750C2D49-C0AB-4FDE-930C-208E477DBA44}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Metrics.AspNetCore.Health.Endpoints", "src\App.Metrics.AspNetCore.Health.Endpoints\App.Metrics.AspNetCore.Health.Endpoints.csproj", "{F2EA63C0-A819-48FB-B0E5-5CBF879F6D01}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +87,14 @@ Global
 		{D3A46A93-5920-4EFC-8A93-A9499AC271CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3A46A93-5920-4EFC-8A93-A9499AC271CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3A46A93-5920-4EFC-8A93-A9499AC271CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{750C2D49-C0AB-4FDE-930C-208E477DBA44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{750C2D49-C0AB-4FDE-930C-208E477DBA44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{750C2D49-C0AB-4FDE-930C-208E477DBA44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{750C2D49-C0AB-4FDE-930C-208E477DBA44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2EA63C0-A819-48FB-B0E5-5CBF879F6D01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2EA63C0-A819-48FB-B0E5-5CBF879F6D01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2EA63C0-A819-48FB-B0E5-5CBF879F6D01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2EA63C0-A819-48FB-B0E5-5CBF879F6D01}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -97,6 +109,8 @@ Global
 		{8869572F-E409-49A4-AA47-231F0317589E} = {2D805782-756E-4C98-B22E-F502BEE95318}
 		{9EFA13CB-ED71-4921-8134-21CB2D0E2292} = {2D805782-756E-4C98-B22E-F502BEE95318}
 		{D3A46A93-5920-4EFC-8A93-A9499AC271CB} = {C0BC96C5-46E1-4323-9C5D-58D9A96549CD}
+		{750C2D49-C0AB-4FDE-930C-208E477DBA44} = {2D805782-756E-4C98-B22E-F502BEE95318}
+		{F2EA63C0-A819-48FB-B0E5-5CBF879F6D01} = {2D805782-756E-4C98-B22E-F502BEE95318}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A8699A1D-0BA1-403C-86E9-C789CD2645EB}

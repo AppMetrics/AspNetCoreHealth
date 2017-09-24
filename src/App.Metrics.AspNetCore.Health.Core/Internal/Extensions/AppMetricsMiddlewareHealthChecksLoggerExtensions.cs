@@ -12,29 +12,34 @@ namespace Microsoft.Extensions.Logging
     [ExcludeFromCodeCoverage]
     internal static class AppMetricsMiddlewareHealthChecksLoggerExtensions
     {
-        public static void MiddlewareExecuted(this ILogger logger, Type middleware)
+        public static void MiddlewareExecuted<TMiddleware>(this ILogger logger)
         {
-            logger.LogTrace(AppMetricsEventIds.Middleware.MiddlewareExecutedId, $"Executed AspNet Metrics Middleware Health Checks {middleware.FullName}");
+            if (logger.IsEnabled(LogLevel.Trace))
+            {
+                logger.LogTrace(AppMetricsEventIds.Middleware.MiddlewareExecutedId, $"Executed App Metrics Health Middleware {typeof(TMiddleware).FullName}");
+            }
         }
 
-        public static void MiddlewareFailed(this ILogger logger, Type middleware, Exception e, string message)
+        public static void MiddlewareFailed<TMiddleware>(this ILogger logger, Exception e, string message)
         {
-            logger.LogError(AppMetricsEventIds.Middleware.MiddlewareErrorId, e, $"[{middleware.FullName}] {message}");
+            logger.LogError(AppMetricsEventIds.Middleware.MiddlewareErrorId, e, $"[{typeof(TMiddleware).FullName}] {message}");
         }
 
-        public static void MiddlewareExecuting(this ILogger logger, Type middleware)
+        public static void MiddlewareExecuting<TMiddleware>(this ILogger logger)
         {
-            logger.LogTrace(AppMetricsEventIds.Middleware.MiddlewareExecutingId, $"Executing AspNet Metrics Middleware Health Checks {middleware.FullName}");
+            if (logger.IsEnabled(LogLevel.Trace))
+            {
+                logger.LogTrace(AppMetricsEventIds.Middleware.MiddlewareExecutingId, $"Executing App Metrics Health Middleware {typeof(TMiddleware).FullName}");
+            }
         }
 
         private static class AppMetricsEventIds
         {
             public static class Middleware
             {
-                public const int MiddlewareExecutedId = MiddlewareStart + 1;
-                public const int MiddlewareExecutingId = MiddlewareStart + 2;
-                public const int MiddlewareErrorId = MiddlewareStart + 3;
-                private const int MiddlewareStart = 3000;
+                public const int MiddlewareExecutedId = 1;
+                public const int MiddlewareExecutingId = 2;
+                public const int MiddlewareErrorId = 3;
             }
         }
     }

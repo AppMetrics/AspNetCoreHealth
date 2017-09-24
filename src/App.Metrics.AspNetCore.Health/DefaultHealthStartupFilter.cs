@@ -6,19 +6,23 @@ using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 
-namespace App.Metrics.AspNetCore.Health.Core
+namespace App.Metrics.AspNetCore.Health
 {
+    /// <summary>
+    /// Inserts the App Metrics Health Middleware at the request pipeline
+    /// </summary>
     public class DefaultHealthStartupFilter : IStartupFilter
     {
+        /// <inheritdoc />
         public Action<IApplicationBuilder> Configure(Action<IApplicationBuilder> next)
         {
-            return AddHealth;
+            return AddAllMetricsEndpointsAndTrackingMiddleware;
 
-            void AddHealth(IApplicationBuilder builder)
+            void AddAllMetricsEndpointsAndTrackingMiddleware(IApplicationBuilder app)
             {
-                builder.UseHealth();
+                app.UseHealthAllEndpoints();
 
-                next(builder);
+                next(app);
             }
         }
     }

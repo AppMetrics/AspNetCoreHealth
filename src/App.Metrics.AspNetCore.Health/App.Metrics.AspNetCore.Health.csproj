@@ -10,13 +10,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="App.Metrics.Health" Version="$(AppMetricsHealthVersion)" />
-    <PackageReference Include="Microsoft.AspNetCore.Http" Version="$(AspNetCoreVersion)" />
-    <PackageReference Include="Microsoft.AspNetCore.Routing" Version="$(AspNetCoreVersion)" />
+    <PackageReference Include="App.Metrics.Health" Version="2.0.0-alpha-0048" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\App.Metrics.AspNetCore.Health.Core\App.Metrics.AspNetCore.Health.Core.csproj" />
+    <ProjectReference Include="..\App.Metrics.AspNetCore.Health.Endpoints\App.Metrics.AspNetCore.Health.Endpoints.csproj" />
   </ItemGroup>
 
 </Project>

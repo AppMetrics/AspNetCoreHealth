@@ -3,7 +3,7 @@
   <Import Project="..\..\build\common.props" />
   
   <PropertyGroup>
-    <Description>App Metrics ASP.NET Core health core components.</Description>
+    <Description>App Metrics Health ASP.NET Core core components.</Description>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageTags>appmetrics;aspnetcore;middleware;healthchecks</PackageTags>
@@ -11,8 +11,11 @@
 
   <ItemGroup>
     <PackageReference Include="App.Metrics.Health.Core" Version="$(AppMetricsHealthVersion)" />
+    <PackageReference Include="App.Metrics.Health.Extensions.Configuration" Version="$(AppMetricsMicrosoftExtensionsVersion)" />
+    <PackageReference Include="App.Metrics.Health.Extensions.DependencyInjection" Version="$(AppMetricsMicrosoftExtensionsVersion)" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="$(AspNetCoreVersion)" />
     <PackageReference Include="Microsoft.AspNetCore.Routing" Version="$(AspNetCoreVersion)" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="$(AspNetCoreVersion)" />
   </ItemGroup>
 
   <ItemGroup>

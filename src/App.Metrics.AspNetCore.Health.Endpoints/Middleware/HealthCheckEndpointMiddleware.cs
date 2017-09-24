@@ -11,14 +11,14 @@ using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Logging;
 using Microsoft.Net.Http.Headers;
 
-namespace App.Metrics.AspNetCore.Health.Core
+namespace App.Metrics.AspNetCore.Health.Endpoints.Middleware
 {
     // ReSharper disable ClassNeverInstantiated.Global
     public class HealthCheckEndpointMiddleware
         // ReSharper restore ClassNeverInstantiated.Global
     {
         private readonly RequestDelegate _next;
-        private readonly IProvideHealth _health;
+        private readonly IRunHealthChecks _healthCheckRunner;
         private readonly IHealthResponseWriter _healthResponseWriter;
         private readonly ILogger<HealthCheckEndpointMiddleware> _logger;
         private readonly TimeSpan _timeout;
@@ -26,22 +26,22 @@ namespace App.Metrics.AspNetCore.Health.Core
         public HealthCheckEndpointMiddleware(
             RequestDelegate next,
             ILoggerFactory loggerFactory,
-            IProvideHealth health,
+            IRunHealthChecks healthCheckRunner,
             IHealthResponseWriter healthResponseWriter,
             TimeSpan timeout)
         {
             _next = next;
-            _health = health;
+            _healthCheckRunner = healthCheckRunner;
             _logger = loggerFactory.CreateLogger<HealthCheckEndpointMiddleware>();
             _healthResponseWriter = healthResponseWriter ?? throw new ArgumentNullException(nameof(healthResponseWriter));
-            _timeout = timeout;
+            _timeout = timeout <= TimeSpan.Zero ? TimeSpan.FromSeconds(20) : timeout;
         }
 
         // ReSharper disable UnusedMember.Global
         public async Task Invoke(HttpContext context)
             // ReSharper restore UnusedMember.Global
         {
-            _logger.MiddlewareExecuting(GetType());
+            _logger.MiddlewareExecuting<HealthCheckEndpointMiddleware>();
 
             var healthCheckCancellationTokenSource = new CancellationTokenSource(_timeout);
 
@@ -49,7 +49,7 @@ namespace App.Metrics.AspNetCore.Health.Core
             {
                 try
                 {
-                    var healthStatus = await _health.ReadAsync(cancellationTokenSource.Token);
+                    var healthStatus = await _healthCheckRunner.ReadAsync(cancellationTokenSource.Token);
 
                     await _healthResponseWriter.WriteAsync(context, healthStatus, cancellationTokenSource.Token);
                 }
@@ -60,12 +60,12 @@ namespace App.Metrics.AspNetCore.Health.Core
                     if (healthCheckCancellationTokenSource.IsCancellationRequested)
                     {
                         responseFeature.ReasonPhrase = "Health Check Middleware timed out.";
-                        _logger.MiddlewareFailed(GetType(), e, responseFeature.ReasonPhrase);
+                        _logger.MiddlewareFailed<HealthCheckEndpointMiddleware>(e, responseFeature.ReasonPhrase);
                     }
                     else if (context.RequestAborted.IsCancellationRequested)
                     {
                         responseFeature.ReasonPhrase = "Health Check Middleware request aborted.";
-                        _logger.MiddlewareFailed(GetType(), e, responseFeature.ReasonPhrase);
+                        _logger.MiddlewareFailed<HealthCheckEndpointMiddleware>(e, responseFeature.ReasonPhrase);
                     }
 
                     context.SetNoCacheHeaders();
@@ -74,7 +74,7 @@ namespace App.Metrics.AspNetCore.Health.Core
                 }
             }
 
-            _logger.MiddlewareExecuted(GetType());
+            _logger.MiddlewareExecuted<HealthCheckEndpointMiddleware>();
         }
     }
 }

@@ -16,7 +16,7 @@ namespace App.Metrics.AspNetCore.Health.Core.Internal.NoOp
         public string ContentType => "text/plain";
 
         /// <inheritdoc />
-        public Task WriteAsync(HttpContext context, HealthStatus healthStatus, CancellationToken token = default(CancellationToken))
+        public Task WriteAsync(HttpContext context, HealthStatus healthStatus, CancellationToken token = default)
         {
             return context.Response.WriteAsync(
                 "No formatter has been registered. See App.Metrics.Formatters.Ascii & App.Metrics.Formatters.Json for example.",

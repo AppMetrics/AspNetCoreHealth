@@ -17,7 +17,7 @@ namespace HealthSandboxMvc.HealthChecks
         }
 
         /// <inheritdoc />
-        protected override async ValueTask<HealthCheckResult> CheckAsync(CancellationToken cancellationToken = default(CancellationToken))
+        protected override async ValueTask<HealthCheckResult> CheckAsync(CancellationToken cancellationToken = default)
         {
             await Task.Delay(TimeSpan.FromSeconds(6), cancellationToken);
 

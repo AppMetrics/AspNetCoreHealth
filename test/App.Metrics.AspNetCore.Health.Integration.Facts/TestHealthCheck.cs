@@ -15,7 +15,7 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts
         public TestHealthCheck()
             : base("Test Health Check") { }
 
-        protected override ValueTask<HealthCheckResult> CheckAsync(CancellationToken token = default(CancellationToken))
+        protected override ValueTask<HealthCheckResult> CheckAsync(CancellationToken token = default)
         {
             return new ValueTask<HealthCheckResult>(HealthCheckResult.Healthy("OK"));
         }

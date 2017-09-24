@@ -3,7 +3,9 @@
 // </copyright>
 
 using System;
-using App.Metrics.AspNetCore.Health.Core;
+using App.Metrics.AspNetCore.Health.Endpoints;
+using App.Metrics.Health;
+using App.Metrics.Health.Extensions.Configuration;
 using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,24 +16,17 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.DependencyInjection
 {
     public class MiddlewareHealthChecksAppMetricsBuilderExtensionsTests
     {
-        private readonly string _startupAssemblyName;
-
-        public MiddlewareHealthChecksAppMetricsBuilderExtensionsTests()
-        {
-            _startupAssemblyName = typeof(MiddlewareHealthChecksAppMetricsBuilderExtensionsTests).Assembly.GetName().Name;
-        }
-
         [Fact]
         public void Can_load_settings_from_configuration()
         {
-            var options = new HealthEndpointOptions();
+            var endpointOptions = new HealthEndpointOptions();
+
             var provider = SetupServicesAndConfiguration();
+            Action resolveEndpointsOptions = () => { endpointOptions = provider.GetRequiredService<IOptions<HealthEndpointOptions>>().Value; };
 
-            Action resolveOptions = () => { options = provider.GetRequiredService<IOptions<HealthEndpointOptions>>().Value; };
+            resolveEndpointsOptions.ShouldNotThrow();
 
-            resolveOptions.ShouldNotThrow();
-            options.Endpoint.Should().Be("/health-test");
-            options.Enabled.Should().Be(false);
+            endpointOptions.HealthEndpointEnabled.Should().Be(false);
         }
 
         [Fact]
@@ -39,36 +34,42 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.DependencyInjection
         {
             var options = new HealthEndpointOptions();
             var provider = SetupServicesAndConfiguration(
-                (o) => { o.Enabled = true; });
+                o =>
+                {
+                    o.HealthEndpointEnabled = true;
+                    o.Timeout = TimeSpan.FromDays(1);
+                });
 
             Action resolveOptions = () => { options = provider.GetRequiredService<IOptions<HealthEndpointOptions>>().Value; };
 
             resolveOptions.ShouldNotThrow();
-            options.Enabled.Should().Be(true);
+            options.HealthEndpointEnabled.Should().Be(true);
+            options.Timeout.Should().Be(TimeSpan.FromDays(1));
         }
 
         private IServiceProvider SetupServicesAndConfiguration(
-            Action<HealthEndpointOptions> setupHealthAction = null)
+            Action<HealthEndpointOptions> setupEndpointAction = null)
         {
             var services = new ServiceCollection();
+            services.AddOptions();
 
-            var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("DependencyInjection/TestConfiguration/appsettings.json", optional: true, reloadOnChange: true);
 
             var configuration = builder.Build();
 
-            services.AddOptions();
+            var healthBuilder = AppMetricsHealth.CreateDefaultBuilder()
+                .Configuration.ReadFrom(configuration);
+            services.AddHealth(healthBuilder);
 
-#pragma warning disable CS0612
-            var healthBuilder = services.AddHealth(_startupAssemblyName);
-#pragma warning restore CS0612
-
-            if (setupHealthAction == null)
+            if (setupEndpointAction == null)
             {
-                healthBuilder.AddAspNetCoreHealth(configuration.GetSection(nameof(HealthEndpointOptions)));
+                services.AddHealthEndpoints(configuration.GetSection(nameof(HealthEndpointOptions)));
             }
             else
             {
-                healthBuilder.AddAspNetCoreHealth(configuration.GetSection(nameof(HealthEndpointOptions)), setupHealthAction);
+                services.AddHealthEndpoints(configuration.GetSection(nameof(HealthEndpointOptions)), setupEndpointAction);
             }
 
             return services.BuildServiceProvider();

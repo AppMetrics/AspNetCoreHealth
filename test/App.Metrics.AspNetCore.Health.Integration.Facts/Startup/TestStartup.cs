@@ -5,8 +5,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using App.Metrics.AspNetCore.Health.Core;
+using App.Metrics.AspNetCore.Health.Endpoints;
 using App.Metrics.Health;
+using App.Metrics.Health.Builder;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,7 +17,10 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.Startup
 {
     public abstract class TestStartup
     {
-        protected void SetupAppBuilder(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory) { app.UseHealth(); }
+        protected void SetupAppBuilder(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        {
+            app.UseHealthEndpoint();
+        }
 
         protected void SetupServices(
             IServiceCollection services,
@@ -24,32 +28,32 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.Startup
             IEnumerable<HealthCheckResult> healthChecks = null)
         {
             services.AddOptions();
-            services.AddLogging().AddRouting(options => { options.LowercaseUrls = true; });
+            services.AddLogging()
+                .AddRouting(options => { options.LowercaseUrls = true; });
 
-            var startupAssemblyName = typeof(TestStartup).Assembly.GetName().Name;
+            // TODO: scan for healthchecks
+            // var startupAssemblyName = typeof(TestStartup).Assembly.GetName().Name;
 
-#pragma warning disable CS0612
-            var healthBuilder = services.
-                AddHealth(
-                    startupAssemblyName,
-                    options =>
-                    {
-                        var checks = healthChecks?.ToList() ?? new List<HealthCheckResult>();
+            var builder = new HealthBuilder()
+                .Configuration.Configure(options => options.Enabled = true)
+                .OutputHealth.AsPlainText()
+                .OutputHealth.AsJson();
 
-                        for (var i = 0; i < checks.Count; i++)
+            var checks = healthChecks?.ToList() ?? new List<HealthCheckResult>();
+
+            for (var i = 0; i < checks.Count; i++)
+            {
+                var check = checks[i];
+                builder.HealthChecks.AddCheck("Check" + i, () => new ValueTask<HealthCheckResult>(check));
+            }
+
+            services.AddHealth(builder)
+                .AddHealthEndpoints(
+                        options =>
                         {
-                            var check = checks[i];
-                            options.Checks.AddCheck("Check" + i, () => new ValueTask<HealthCheckResult>(check));
-                        }
-                    });
-#pragma warning restore CS0612
-
-            healthBuilder.AddAspNetCoreHealth(
-                options =>
-                {
-                    options.Enabled = healthMiddlewareCoreChecksOptions.Enabled;
-                    options.Endpoint = healthMiddlewareCoreChecksOptions.Endpoint;
-                });
+                            options.HealthEndpointEnabled = healthMiddlewareCoreChecksOptions.HealthEndpointEnabled;
+                            options.Timeout = healthMiddlewareCoreChecksOptions.Timeout;
+                        });
         }
     }
 }

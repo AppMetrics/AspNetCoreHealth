@@ -3,55 +3,50 @@
 // </copyright>
 
 using System;
-using System.Net;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using App.Metrics.Health;
 using App.Metrics.Health.Formatters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Headers;
-using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 
 namespace App.Metrics.AspNetCore.Health.Core
 {
     public class DefaultHealthResponseWriter : IHealthResponseWriter
     {
+        private readonly IHealthOutputFormatter _fallbackFormatter;
         private readonly IHealthOutputFormatter _formatter;
-        private readonly HealthOptions _healthOptions;
+        private readonly HealthFormatterCollection _formatters;
 
         public DefaultHealthResponseWriter(
-            IOptions<HealthOptions> healthOptionsAccessor,
-            IOptions<HealthEndpointOptions> healthMiddlewareOptionsAccessor,
-            IHealthOutputFormatter formatter)
+            IHealthOutputFormatter fallbackFormatter,
+            IReadOnlyCollection<IHealthOutputFormatter> formatters)
         {
-            if (healthMiddlewareOptionsAccessor == null)
+            if (formatters == null)
             {
-                throw new ArgumentNullException(nameof(healthMiddlewareOptionsAccessor));
+                throw new ArgumentNullException(nameof(formatters));
             }
 
-            _formatter = formatter;
-            _healthOptions = healthOptionsAccessor?.Value ?? throw new ArgumentNullException(nameof(healthOptionsAccessor));
+            _formatters = new HealthFormatterCollection(formatters.ToList());
+            _fallbackFormatter = fallbackFormatter;
         }
 
-        public DefaultHealthResponseWriter(
-            IOptions<HealthOptions> healthOptionsAccessor,
-            IOptions<HealthEndpointOptions> healthMiddlewareOptionsAccessor)
+        // ReSharper disable UnusedMember.Global
+        public DefaultHealthResponseWriter(IHealthOutputFormatter formatter)
+            // ReSharper restore UnusedMember.Global
         {
-            if (healthMiddlewareOptionsAccessor == null)
-            {
-                throw new ArgumentNullException(nameof(healthMiddlewareOptionsAccessor));
-            }
-
-            _healthOptions = healthOptionsAccessor?.Value ?? throw new ArgumentNullException(nameof(healthOptionsAccessor));
+            _formatter = formatter ?? throw new ArgumentNullException(nameof(formatter));
         }
 
         /// <inheritdoc />
-        public Task WriteAsync(HttpContext context, HealthStatus healthStatus, CancellationToken token = default(CancellationToken))
+        public Task WriteAsync(HttpContext context, HealthStatus healthStatus, CancellationToken token = default)
         {
             var formatter = _formatter ?? context.Request.GetTypedHeaders().ResolveFormatter(
-                                _healthOptions.DefaultOutputFormatter,
-                                metricsMediaTypeValue => _healthOptions.OutputFormatters.GetType(metricsMediaTypeValue));
+                                _fallbackFormatter,
+                                metricsMediaTypeValue => _formatters.GetType(metricsMediaTypeValue));
 
             context.SetNoCacheHeaders();
 

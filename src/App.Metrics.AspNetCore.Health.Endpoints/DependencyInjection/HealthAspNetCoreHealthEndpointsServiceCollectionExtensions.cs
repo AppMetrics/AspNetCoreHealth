@@ -3,7 +3,6 @@
 // </copyright>
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using App.Metrics.AspNetCore.Health;
 using App.Metrics.AspNetCore.Health.Core;
@@ -190,7 +189,7 @@ namespace Microsoft.Extensions.DependencyInjection
             var endpointOptionsDescriptor = ServiceDescriptor.Singleton<IConfigureOptions<HealthEndpointOptions>, HealthEndpointsOptionsSetup>();
             services.TryAddEnumerable(endpointOptionsDescriptor);
 
-            services.TryAddSingleton<IHealthResponseWriter>(provider => ResolveHealthResponseWriter(provider));
+            services.TryAddSingleton(provider => ResolveHealthResponseWriter(provider));
         }
 
         internal static IHealthResponseWriter ResolveHealthResponseWriter(IServiceProvider provider, IHealthOutputFormatter formatter = null)

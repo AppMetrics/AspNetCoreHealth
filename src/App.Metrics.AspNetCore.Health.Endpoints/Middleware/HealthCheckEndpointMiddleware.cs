@@ -17,20 +17,20 @@ namespace App.Metrics.AspNetCore.Health.Endpoints.Middleware
     public class HealthCheckEndpointMiddleware
         // ReSharper restore ClassNeverInstantiated.Global
     {
-        private readonly RequestDelegate _next;
         private readonly IRunHealthChecks _healthCheckRunner;
         private readonly IHealthResponseWriter _healthResponseWriter;
         private readonly ILogger<HealthCheckEndpointMiddleware> _logger;
         private readonly TimeSpan _timeout;
 
+        // ReSharper disable UnusedParameter.Local
         public HealthCheckEndpointMiddleware(
             RequestDelegate next,
             ILoggerFactory loggerFactory,
             IRunHealthChecks healthCheckRunner,
             IHealthResponseWriter healthResponseWriter,
             TimeSpan timeout)
+            // ReSharper restore UnusedParameter.Local
         {
-            _next = next;
             _healthCheckRunner = healthCheckRunner;
             _logger = loggerFactory.CreateLogger<HealthCheckEndpointMiddleware>();
             _healthResponseWriter = healthResponseWriter ?? throw new ArgumentNullException(nameof(healthResponseWriter));

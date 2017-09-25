@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using System.Reflection;
 using App.Metrics.Health;
 using App.Metrics.Health.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,8 +33,9 @@ namespace Microsoft.AspNetCore.Hosting
                 {
                     var healthBuilder = AppMetricsHealth.CreateDefaultBuilder();
                     configureHealth(context, healthBuilder);
+                    healthBuilder.HealthChecks.RegisterFromAssembly(services, Assembly.GetEntryAssembly().GetName().Name);
                     healthBuilder.Configuration.ReadFrom(context.Configuration);
-                    services.AddHealth(healthBuilder);
+                    healthBuilder.BuildAndAddTo(services);
                     _healthBuilt = true;
                 });
         }
@@ -67,10 +69,10 @@ namespace Microsoft.AspNetCore.Hosting
                 (context, services) =>
                 {
                     services.AddHealth(
-                        builder =>
+                        healthBuilder =>
                         {
-                            configureHealth(context, builder);
-                            builder.Configuration.ReadFrom(context.Configuration);
+                            configureHealth(context, healthBuilder);
+                            healthBuilder.Configuration.ReadFrom(context.Configuration);
                             _healthBuilt = true;
                         });
                 });
@@ -84,9 +86,9 @@ namespace Microsoft.AspNetCore.Hosting
             }
 
             hostBuilder.ConfigureHealth(
-                (context, builder) =>
+                (context, healthBuilder) =>
                 {
-                    configureHealth(builder);
+                    configureHealth(healthBuilder);
                 });
 
             return hostBuilder;
@@ -104,9 +106,11 @@ namespace Microsoft.AspNetCore.Hosting
                 {
                     if (!_healthBuilt)
                     {
-                        var builder = AppMetricsHealth.CreateDefaultBuilder()
-                            .Configuration.ReadFrom(context.Configuration);
-                        services.AddHealth(builder);
+                        AppMetricsHealth.CreateDefaultBuilder()
+                            .Configuration.ReadFrom(context.Configuration)
+                            .HealthChecks.RegisterFromAssembly(services, Assembly.GetEntryAssembly().GetName().Name)
+                            .BuildAndAddTo(services);
+
                         _healthBuilt = true;
                     }
                 });

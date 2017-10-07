@@ -43,14 +43,14 @@ namespace Microsoft.AspNetCore.Hosting
         ///     <see cref="T:Microsoft.AspNetCore.Hosting.IWebHostBuilder" />.
         /// </summary>
         /// <param name="hostBuilder">The <see cref="T:Microsoft.AspNetCore.Hosting.IWebHostBuilder" />.</param>
-        /// <param name="optionsDelegate">A callback to configure <see cref="HealthEndpointOptions" />.</param>
+        /// <param name="optionsDelegate">A callback to configure <see cref="HealthEndpointsOptions" />.</param>
         /// <returns>A reference to this instance after the operation has completed.</returns>
         /// <exception cref="ArgumentNullException">
         ///     <see cref="T:Microsoft.AspNetCore.Hosting.IWebHostBuilder" /> cannot be null
         /// </exception>
         public static IWebHostBuilder UseHealthEndpoints(
             this IWebHostBuilder hostBuilder,
-            Action<HealthEndpointOptions> optionsDelegate)
+            Action<HealthEndpointsOptions> optionsDelegate)
         {
             hostBuilder.ConfigureHealth();
 
@@ -69,21 +69,21 @@ namespace Microsoft.AspNetCore.Hosting
         ///     <see cref="T:Microsoft.AspNetCore.Hosting.IWebHostBuilder" />.
         /// </summary>
         /// <param name="hostBuilder">The <see cref="T:Microsoft.AspNetCore.Hosting.IWebHostBuilder" />.</param>
-        /// <param name="setupDelegate">A callback to configure <see cref="HealthEndpointOptions" />.</param>
+        /// <param name="setupDelegate">A callback to configure <see cref="HealthEndpointsOptions" />.</param>
         /// <returns>A reference to this instance after the operation has completed.</returns>
         /// <exception cref="ArgumentNullException">
         ///     <see cref="T:Microsoft.AspNetCore.Hosting.IWebHostBuilder" /> cannot be null
         /// </exception>
         public static IWebHostBuilder UseHealthEndpoints(
             this IWebHostBuilder hostBuilder,
-            Action<WebHostBuilderContext, HealthEndpointOptions> setupDelegate)
+            Action<WebHostBuilderContext, HealthEndpointsOptions> setupDelegate)
         {
             hostBuilder.ConfigureHealth();
 
             hostBuilder.ConfigureServices(
                 (context, services) =>
                 {
-                    var endpointOptions = new HealthEndpointOptions();
+                    var endpointOptions = new HealthEndpointsOptions();
                     services.AddHealthEndpoints(
                         options => setupDelegate(context, endpointOptions),
                         context.Configuration);
@@ -98,8 +98,8 @@ namespace Microsoft.AspNetCore.Hosting
         ///     <see cref="T:Microsoft.AspNetCore.Hosting.IWebHostBuilder" />.
         /// </summary>
         /// <param name="hostBuilder">The <see cref="T:Microsoft.AspNetCore.Hosting.IWebHostBuilder" />.</param>
-        /// <param name="configuration">The <see cref="IConfiguration" /> containing <see cref="HealthEndpointOptions" /></param>
-        /// <param name="optionsDelegate">A callback to configure <see cref="HealthEndpointOptions" />.</param>
+        /// <param name="configuration">The <see cref="IConfiguration" /> containing <see cref="HealthEndpointsOptions" /></param>
+        /// <param name="optionsDelegate">A callback to configure <see cref="HealthEndpointsOptions" />.</param>
         /// <returns>A reference to this instance after the operation has completed.</returns>
         /// <exception cref="ArgumentNullException">
         ///     <see cref="T:Microsoft.AspNetCore.Hosting.IWebHostBuilder" /> cannot be null
@@ -107,7 +107,7 @@ namespace Microsoft.AspNetCore.Hosting
         public static IWebHostBuilder UseHealthEndpoints(
             this IWebHostBuilder hostBuilder,
             IConfiguration configuration,
-            Action<HealthEndpointOptions> optionsDelegate)
+            Action<HealthEndpointsOptions> optionsDelegate)
         {
             hostBuilder.ConfigureHealth();
 
@@ -125,15 +125,33 @@ namespace Microsoft.AspNetCore.Hosting
             this IWebHostBuilder hostBuilder,
             Action<HealthEndpointsHostingOptions> setupHostingConfiguration)
         {
-            var metricsEndpointHostingOptions = new HealthEndpointsHostingOptions();
-            setupHostingConfiguration(metricsEndpointHostingOptions);
+            var healthEndpointHostingOptions = new HealthEndpointsHostingOptions();
+            setupHostingConfiguration(healthEndpointHostingOptions);
 
             var ports = new List<int>();
 
-            if (metricsEndpointHostingOptions.HealthEndpointPort.HasValue)
+            if (healthEndpointHostingOptions.AllEndpointsPort.HasValue)
             {
-                Console.WriteLine($"Hosting {metricsEndpointHostingOptions.HealthEndpoint} on port {metricsEndpointHostingOptions.HealthEndpointPort.Value}");
-                ports.Add(metricsEndpointHostingOptions.HealthEndpointPort.Value);
+                Console.WriteLine(
+                    $"Hosting {healthEndpointHostingOptions.HealthEndpoint} endpoint on port {healthEndpointHostingOptions.AllEndpointsPort.Value}");
+                Console.WriteLine(
+                    $"Hosting {healthEndpointHostingOptions.PingEndpoint} on port {healthEndpointHostingOptions.AllEndpointsPort.Value}");
+
+                ports.Add(healthEndpointHostingOptions.AllEndpointsPort.Value);
+            }
+            else
+            {
+                if (healthEndpointHostingOptions.HealthEndpointPort.HasValue)
+                {
+                    Console.WriteLine($"Hosting {healthEndpointHostingOptions.HealthEndpoint} on port {healthEndpointHostingOptions.HealthEndpointPort.Value}");
+                    ports.Add(healthEndpointHostingOptions.HealthEndpointPort.Value);
+                }
+
+                if (healthEndpointHostingOptions.PingEndpointPort.HasValue)
+                {
+                    Console.WriteLine($"Hosting {healthEndpointHostingOptions.PingEndpoint} on port {healthEndpointHostingOptions.PingEndpointPort.Value}");
+                    ports.Add(healthEndpointHostingOptions.PingEndpointPort.Value);
+                }
             }
 
             if (ports.Any())

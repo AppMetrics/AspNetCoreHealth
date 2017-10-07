@@ -25,8 +25,8 @@ namespace App.Metrics.AspNetCore.Health
         public Action<HealthOptions> HealthOptions { get; set; }
 
         /// <summary>
-        ///     Gets or sets <see cref="Action{HealthEndpointOptions}" /> to configure the provided <see cref="EndpointOptions" />.
+        ///     Gets or sets <see cref="Action{HealthEndpointsOptions}" /> to configure the provided <see cref="EndpointOptions" />.
         /// </summary>
-        public Action<HealthEndpointOptions> EndpointOptions { get; set; }
+        public Action<HealthEndpointsOptions> EndpointOptions { get; set; }
     }
 }

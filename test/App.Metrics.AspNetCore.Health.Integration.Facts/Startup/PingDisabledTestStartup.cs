@@ -1,4 +1,4 @@
-// <copyright file="UnhealthyHealthTestStartup.cs" company="Allan Hardy">
+﻿// <copyright file="PingDisabledTestStartup.cs" company="Allan Hardy">
 // Copyright (c) Allan Hardy. All rights reserved.
 // </copyright>
 
@@ -11,25 +11,23 @@ using Microsoft.Extensions.Logging;
 
 namespace App.Metrics.AspNetCore.Health.Integration.Facts.Startup
 {
-    // ReSharper disable ClassNeverInstantiated.Global
-    public class UnhealthyHealthTestStartup : TestStartup
-        // ReSharper restore ClassNeverInstantiated.Global
+    public class PingDisabledTestStartup : TestStartup
     {
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            app.UseHealthEndpoint();
+            app.UsePingEndpoint();
 
             SetupAppBuilder(app, env, loggerFactory);
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var appMetricsMiddlewareHelathCheckOptions = new HealthEndpointsOptions { HealthEndpointEnabled = true };
+            var healthEndpointsOptions = new HealthEndpointsOptions
+                                         {
+                                             PingEndpointEnabled = false
+                                         };
 
-            SetupServices(
-                services,
-                appMetricsMiddlewareHelathCheckOptions,
-                healthChecks: new[] { HealthCheckResult.Healthy(), HealthCheckResult.Degraded(), HealthCheckResult.Unhealthy() });
+            SetupServices(services, healthEndpointsOptions, healthChecks: new[] { HealthCheckResult.Healthy() });
         }
     }
 }

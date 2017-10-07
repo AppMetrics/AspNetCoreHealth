@@ -9,6 +9,7 @@ namespace App.Metrics.AspNetCore.Health.Endpoints.Internal
         public static class DefaultRoutePaths
         {
             public const string HealthEndpoint = "/health";
+            public const string PingEndpoint = "/ping";
         }
     }
 }

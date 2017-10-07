@@ -21,6 +21,7 @@ namespace App.Metrics.AspNetCore.Health.Endpoints
             void AddHealthEndpoints(IApplicationBuilder builder)
             {
                 builder.UseHealthEndpoint();
+                builder.UsePingEndpoint();
 
                 next(builder);
             }

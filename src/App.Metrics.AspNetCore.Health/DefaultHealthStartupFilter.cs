@@ -16,11 +16,12 @@ namespace App.Metrics.AspNetCore.Health
         /// <inheritdoc />
         public Action<IApplicationBuilder> Configure(Action<IApplicationBuilder> next)
         {
-            return AddAllMetricsEndpointsAndTrackingMiddleware;
+            return AddAllHealthEndpoints;
 
-            void AddAllMetricsEndpointsAndTrackingMiddleware(IApplicationBuilder app)
+            void AddAllHealthEndpoints(IApplicationBuilder app)
             {
                 app.UseHealthAllEndpoints();
+                app.UsePingEndpoint();
 
                 next(app);
             }

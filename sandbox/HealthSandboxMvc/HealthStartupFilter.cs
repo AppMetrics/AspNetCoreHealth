@@ -16,6 +16,7 @@ namespace HealthSandboxMvc
 
             void AddHealth(IApplicationBuilder builder)
             {
+                builder.UsePingEndpoint();
                 builder.UseHealthEndpoint();
 
                 next(builder);

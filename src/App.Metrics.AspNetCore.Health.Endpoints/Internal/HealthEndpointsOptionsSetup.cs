@@ -11,9 +11,9 @@ using Microsoft.Extensions.Options;
 namespace App.Metrics.AspNetCore.Health.Endpoints.Internal
 {
     /// <summary>
-    ///     Sets up default health endpoint options for <see cref="HealthEndpointOptions"/>.
+    ///     Sets up default health endpoint options for <see cref="HealthEndpointsOptions"/>.
     /// </summary>
-    public class HealthEndpointsOptionsSetup : IConfigureOptions<HealthEndpointOptions>
+    public class HealthEndpointsOptionsSetup : IConfigureOptions<HealthEndpointsOptions>
     {
         private readonly HealthFormatterCollection _healthFormatters;
 
@@ -23,7 +23,7 @@ namespace App.Metrics.AspNetCore.Health.Endpoints.Internal
         }
 
         /// <inheritdoc />
-        public void Configure(HealthEndpointOptions options)
+        public void Configure(HealthEndpointsOptions options)
         {
             if (options.HealthEndpointOutputFormatter == null)
             {

@@ -21,7 +21,7 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class HealthAspNetCoreHealthEndpointsServiceCollectionExtensions
     {
-        private static readonly string DefaultConfigSection = nameof(HealthEndpointOptions);
+        private static readonly string DefaultConfigSection = nameof(HealthEndpointsOptions);
 
         /// <summary>
         ///     Adds essential App Metrics Health AspNet Core metrics services to the specified <see cref="IServiceCollection" />.
@@ -41,7 +41,7 @@ namespace Microsoft.Extensions.DependencyInjection
         ///     Adds essential App Metrics Health AspNet Core metrics services to the specified <see cref="IServiceCollection" />.
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection" /> to add services to.</param>
-        /// <param name="configuration">The <see cref="IConfiguration" /> from where to load <see cref="HealthEndpointOptions" />.</param>
+        /// <param name="configuration">The <see cref="IConfiguration" /> from where to load <see cref="HealthEndpointsOptions" />.</param>
         /// <returns>
         ///     An <see cref="IServiceCollection" /> that can be used to further configure services.
         /// </returns>
@@ -58,7 +58,7 @@ namespace Microsoft.Extensions.DependencyInjection
         ///     Adds essential App Metrics Health AspNet Core metrics services to the specified <see cref="IServiceCollection" />.
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection" /> to add services to.</param>
-        /// <param name="configuration">The <see cref="IConfigurationSection" /> from where to load <see cref="HealthEndpointOptions" />.</param>
+        /// <param name="configuration">The <see cref="IConfigurationSection" /> from where to load <see cref="HealthEndpointsOptions" />.</param>
         /// <returns>
         ///     An <see cref="IServiceCollection" /> that can be used to further configure services.
         /// </returns>
@@ -68,7 +68,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             services.AddHealthEndpoints();
 
-            services.Configure<HealthEndpointOptions>(configuration);
+            services.Configure<HealthEndpointsOptions>(configuration);
 
             return services;
         }
@@ -77,9 +77,9 @@ namespace Microsoft.Extensions.DependencyInjection
         ///     Adds essential App Metrics Health AspNet Core health services to the specified <see cref="IServiceCollection" />.
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection" /> to add services to.</param>
-        /// <param name="configuration">The <see cref="IConfiguration" /> from where to load <see cref="HealthEndpointOptions" />.</param>
+        /// <param name="configuration">The <see cref="IConfiguration" /> from where to load <see cref="HealthEndpointsOptions" />.</param>
         /// <param name="setupAction">
-        ///     An <see cref="Action{HealthEndpointOptions}" /> to configure the provided <see cref="HealthEndpointOptions" />.
+        ///     An <see cref="Action{HealthEndpointsOptions}" /> to configure the provided <see cref="HealthEndpointsOptions" />.
         /// </param>
         /// <returns>
         ///     An <see cref="IServiceCollection" /> that can be used to further configure services.
@@ -87,7 +87,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddHealthEndpoints(
             this IServiceCollection services,
             IConfiguration configuration,
-            Action<HealthEndpointOptions> setupAction)
+            Action<HealthEndpointsOptions> setupAction)
         {
             services.AddHealthEndpoints(configuration.GetSection(DefaultConfigSection), setupAction);
 
@@ -98,9 +98,9 @@ namespace Microsoft.Extensions.DependencyInjection
         ///     Adds essential App Metrics Health AspNet Core metrics services to the specified <see cref="IServiceCollection" />.
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection" /> to add services to.</param>
-        /// <param name="configuration">The <see cref="IConfigurationSection" /> from where to load <see cref="HealthEndpointOptions" />.</param>
+        /// <param name="configuration">The <see cref="IConfigurationSection" /> from where to load <see cref="HealthEndpointsOptions" />.</param>
         /// <param name="setupAction">
-        ///     An <see cref="Action{HealthEndpointOptions}" /> to configure the provided <see cref="HealthEndpointOptions" />.
+        ///     An <see cref="Action{HealthEndpointsOptions}" /> to configure the provided <see cref="HealthEndpointsOptions" />.
         /// </param>
         /// <returns>
         ///     An <see cref="IServiceCollection" /> that can be used to further configure services.
@@ -108,11 +108,11 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddHealthEndpoints(
             this IServiceCollection services,
             IConfigurationSection configuration,
-            Action<HealthEndpointOptions> setupAction)
+            Action<HealthEndpointsOptions> setupAction)
         {
             services.AddHealthEndpoints();
 
-            services.Configure<HealthEndpointOptions>(configuration);
+            services.Configure<HealthEndpointsOptions>(configuration);
             services.Configure(setupAction);
 
             return services;
@@ -123,15 +123,15 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection" /> to add services to.</param>
         /// <param name="setupAction">
-        ///     An <see cref="Action{HealthEndpointOptions}" /> to configure the provided <see cref="HealthEndpointOptions" />.
+        ///     An <see cref="Action{HealthEndpointsOptions}" /> to configure the provided <see cref="HealthEndpointsOptions" />.
         /// </param>
-        /// <param name="configuration">The <see cref="IConfiguration" /> from where to load <see cref="HealthEndpointOptions" />.</param>
+        /// <param name="configuration">The <see cref="IConfiguration" /> from where to load <see cref="HealthEndpointsOptions" />.</param>
         /// <returns>
         ///     An <see cref="IServiceCollection" /> that can be used to further configure services.
         /// </returns>
         public static IServiceCollection AddHealthEndpoints(
             this IServiceCollection services,
-            Action<HealthEndpointOptions> setupAction,
+            Action<HealthEndpointsOptions> setupAction,
             IConfiguration configuration)
         {
             services.AddHealthEndpoints(setupAction, configuration.GetSection(DefaultConfigSection));
@@ -144,21 +144,21 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection" /> to add services to.</param>
         /// <param name="setupAction">
-        ///     An <see cref="Action{HealthEndpointOptions}" /> to configure the provided <see cref="HealthEndpointOptions" />.
+        ///     An <see cref="Action{HealthEndpointsOptions}" /> to configure the provided <see cref="HealthEndpointsOptions" />.
         /// </param>
-        /// <param name="configuration">The <see cref="IConfigurationSection" /> from where to load <see cref="HealthEndpointOptions" />.</param>
+        /// <param name="configuration">The <see cref="IConfigurationSection" /> from where to load <see cref="HealthEndpointsOptions" />.</param>
         /// <returns>
         ///     An <see cref="IServiceCollection" /> that can be used to further configure services.
         /// </returns>
         public static IServiceCollection AddHealthEndpoints(
             this IServiceCollection services,
-            Action<HealthEndpointOptions> setupAction,
+            Action<HealthEndpointsOptions> setupAction,
             IConfigurationSection configuration)
         {
             services.AddHealthEndpoints();
 
             services.Configure(setupAction);
-            services.Configure<HealthEndpointOptions>(configuration);
+            services.Configure<HealthEndpointsOptions>(configuration);
 
             return services;
         }
@@ -168,14 +168,14 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection" /> to add services to.</param>
         /// <param name="setupAction">
-        ///     An <see cref="Action{HealthEndpointOptions}" /> to configure the provided <see cref="HealthEndpointOptions" />.
+        ///     An <see cref="Action{HealthEndpointsOptions}" /> to configure the provided <see cref="HealthEndpointsOptions" />.
         /// </param>
         /// <returns>
         ///     An <see cref="IServiceCollection" /> that can be used to further configure services.
         /// </returns>
         public static IServiceCollection AddHealthEndpoints(
             this IServiceCollection services,
-            Action<HealthEndpointOptions> setupAction)
+            Action<HealthEndpointsOptions> setupAction)
         {
             services.AddHealthEndpoints();
 
@@ -186,7 +186,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
         internal static void AddHealthEndpointsServices(IServiceCollection services)
         {
-            var endpointOptionsDescriptor = ServiceDescriptor.Singleton<IConfigureOptions<HealthEndpointOptions>, HealthEndpointsOptionsSetup>();
+            var endpointOptionsDescriptor = ServiceDescriptor.Singleton<IConfigureOptions<HealthEndpointsOptions>, HealthEndpointsOptionsSetup>();
             services.TryAddEnumerable(endpointOptionsDescriptor);
 
             services.TryAddSingleton(provider => ResolveHealthResponseWriter(provider));
@@ -194,7 +194,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
         internal static IHealthResponseWriter ResolveHealthResponseWriter(IServiceProvider provider, IHealthOutputFormatter formatter = null)
         {
-            var endpointOptions = provider.GetRequiredService<IOptions<HealthEndpointOptions>>();
+            var endpointOptions = provider.GetRequiredService<IOptions<HealthEndpointsOptions>>();
             var health = provider.GetRequiredService<IHealthRoot>();
 
             if (health.Options.Enabled && endpointOptions.Value.HealthEndpointEnabled && health.OutputHealthFormatters.Any())

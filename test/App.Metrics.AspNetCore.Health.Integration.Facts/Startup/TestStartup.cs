@@ -24,7 +24,7 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.Startup
 
         protected void SetupServices(
             IServiceCollection services,
-            HealthEndpointOptions healthMiddlewareCoreChecksOptions,
+            HealthEndpointsOptions healthMiddlewareCoreChecksOptions,
             IEnumerable<HealthCheckResult> healthChecks = null)
         {
             services.AddOptions();
@@ -51,6 +51,7 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.Startup
                         options =>
                         {
                             options.HealthEndpointEnabled = healthMiddlewareCoreChecksOptions.HealthEndpointEnabled;
+                            options.PingEndpointEnabled = healthMiddlewareCoreChecksOptions.PingEndpointEnabled;
                             options.Timeout = healthMiddlewareCoreChecksOptions.Timeout;
                         });
         }

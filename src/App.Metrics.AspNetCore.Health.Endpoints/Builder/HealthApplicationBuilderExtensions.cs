@@ -37,7 +37,7 @@ namespace Microsoft.AspNetCore.Builder
 
             var healthOptions = app.ApplicationServices.GetRequiredService<HealthOptions>();
             var endpointHostingOptionsAccessor = app.ApplicationServices.GetRequiredService<IOptions<HealthEndpointsHostingOptions>>();
-            var endpointsOptionsAccessor = app.ApplicationServices.GetRequiredService<IOptions<HealthEndpointOptions>>();
+            var endpointsOptionsAccessor = app.ApplicationServices.GetRequiredService<IOptions<HealthEndpointsOptions>>();
 
             UseHealthMiddleware(app, endpointHostingOptionsAccessor, endpointsOptionsAccessor, healthOptions);
 
@@ -59,7 +59,7 @@ namespace Microsoft.AspNetCore.Builder
 
             var healthOptions = app.ApplicationServices.GetRequiredService<HealthOptions>();
             var endpointHostingOptionsAccessor = app.ApplicationServices.GetRequiredService<IOptions<HealthEndpointsHostingOptions>>();
-            var endpointsOptionsAccessor = app.ApplicationServices.GetRequiredService<IOptions<HealthEndpointOptions>>();
+            var endpointsOptionsAccessor = app.ApplicationServices.GetRequiredService<IOptions<HealthEndpointsOptions>>();
 
             UseHealthMiddleware(app, endpointHostingOptionsAccessor, endpointsOptionsAccessor, healthOptions, formatter);
 
@@ -80,7 +80,7 @@ namespace Microsoft.AspNetCore.Builder
 
         private static bool ShouldUseHealthEndpoint(
             IOptions<HealthEndpointsHostingOptions> endpointsHostingOptionsAccessor,
-            IOptions<HealthEndpointOptions> endpointsOptionsAccessor,
+            IOptions<HealthEndpointsOptions> endpointsOptionsAccessor,
             HealthOptions metricsOptions,
             HttpContext context)
         {
@@ -101,7 +101,7 @@ namespace Microsoft.AspNetCore.Builder
         private static void UseHealthMiddleware(
             IApplicationBuilder app,
             IOptions<HealthEndpointsHostingOptions> endpointsHostingOptionsAccessor,
-            IOptions<HealthEndpointOptions> endpointsOptionsAccessor,
+            IOptions<HealthEndpointsOptions> endpointsOptionsAccessor,
             HealthOptions metricsOptions,
             IHealthOutputFormatter formatter = null)
         {

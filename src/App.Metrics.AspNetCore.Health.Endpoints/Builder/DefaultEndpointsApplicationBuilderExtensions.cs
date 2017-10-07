@@ -19,6 +19,7 @@ namespace Microsoft.AspNetCore.Builder
         public static IApplicationBuilder UseHealthAllEndpoints(this IApplicationBuilder app)
         {
             app.UseHealthEndpoint();
+            app.UsePingEndpoint();
 
             return app;
         }

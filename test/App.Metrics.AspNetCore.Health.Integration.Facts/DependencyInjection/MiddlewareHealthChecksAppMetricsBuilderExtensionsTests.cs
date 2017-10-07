@@ -19,10 +19,10 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.DependencyInjection
         [Fact]
         public void Can_load_settings_from_configuration()
         {
-            var endpointOptions = new HealthEndpointOptions();
+            var endpointOptions = new HealthEndpointsOptions();
 
             var provider = SetupServicesAndConfiguration();
-            Action resolveEndpointsOptions = () => { endpointOptions = provider.GetRequiredService<IOptions<HealthEndpointOptions>>().Value; };
+            Action resolveEndpointsOptions = () => { endpointOptions = provider.GetRequiredService<IOptions<HealthEndpointsOptions>>().Value; };
 
             resolveEndpointsOptions.ShouldNotThrow();
 
@@ -32,7 +32,7 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.DependencyInjection
         [Fact]
         public void Can_override_settings_from_configuration()
         {
-            var options = new HealthEndpointOptions();
+            var options = new HealthEndpointsOptions();
             var provider = SetupServicesAndConfiguration(
                 o =>
                 {
@@ -40,15 +40,16 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.DependencyInjection
                     o.Timeout = TimeSpan.FromDays(1);
                 });
 
-            Action resolveOptions = () => { options = provider.GetRequiredService<IOptions<HealthEndpointOptions>>().Value; };
+            Action resolveOptions = () => { options = provider.GetRequiredService<IOptions<HealthEndpointsOptions>>().Value; };
 
             resolveOptions.ShouldNotThrow();
             options.HealthEndpointEnabled.Should().Be(true);
+            options.PingEndpointEnabled.Should().Be(false);
             options.Timeout.Should().Be(TimeSpan.FromDays(1));
         }
 
         private IServiceProvider SetupServicesAndConfiguration(
-            Action<HealthEndpointOptions> setupEndpointAction = null)
+            Action<HealthEndpointsOptions> setupEndpointAction = null)
         {
             var services = new ServiceCollection();
             services.AddOptions();
@@ -65,11 +66,11 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.DependencyInjection
 
             if (setupEndpointAction == null)
             {
-                services.AddHealthEndpoints(configuration.GetSection(nameof(HealthEndpointOptions)));
+                services.AddHealthEndpoints(configuration.GetSection(nameof(HealthEndpointsOptions)));
             }
             else
             {
-                services.AddHealthEndpoints(configuration.GetSection(nameof(HealthEndpointOptions)), setupEndpointAction);
+                services.AddHealthEndpoints(configuration.GetSection(nameof(HealthEndpointsOptions)), setupEndpointAction);
             }
 
             return services.BuildServiceProvider();

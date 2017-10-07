@@ -26,7 +26,7 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.Startup
         {
             SetupServices(
                 services,
-                new HealthEndpointOptions(),
+                new HealthEndpointsOptions(),
                 healthChecks: new[] { HealthCheckResult.Healthy(), HealthCheckResult.Degraded() });
         }
     }

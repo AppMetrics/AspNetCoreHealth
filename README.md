@@ -1,9 +1,9 @@
-# App Metrics AspNetCore Health <img src="http://app-metrics.io/logo.png" alt="App Metrics" width="50px"/> 
+# App Metrics AspNetCore Health <img src="https://avatars0.githubusercontent.com/u/29864085?v=4&s=200" alt="App Metrics" width="50px"/> 
 [![Official Site](https://img.shields.io/badge/site-appmetrics-blue.svg?style=flat-square)](http://app-metrics.io/getting-started/intro.html) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square)](https://opensource.org/licenses/Apache-2.0) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/app-metrics/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## What is App Metrics AspNetCore Health?
 
-[App Metrics Health](https://github.com/AppMetrics/Health) is an open-source and cross-platform .NET library used define health checks within an application, see the [Getting Started Guide](http://app-metrics.io/getting-started/health-checks/index.html). This repository includes AspNetCore middleware and extensions to expose user-defined health checks over HTTP.
+[App Metrics Health](https://github.com/AppMetrics/Health) is an open-source and cross-platform .NET library used define health checks within an application, see the [Getting Started Guide](https://www.app-metrics.io/web-monitoring/aspnet-core/health/). This repository includes AspNetCore middleware and extensions to expose user-defined health checks over HTTP.
 
 ## Latest Builds, Packages & Repo Stats
 

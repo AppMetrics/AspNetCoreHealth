@@ -7,6 +7,7 @@ using System.Reflection;
 using App.Metrics.Health;
 using App.Metrics.Health.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyModel;
 
 // ReSharper disable CheckNamespace
 namespace Microsoft.AspNetCore.Hosting
@@ -21,7 +22,8 @@ namespace Microsoft.AspNetCore.Hosting
 
         public static IWebHostBuilder ConfigureHealthWithDefaults(
             this IWebHostBuilder hostBuilder,
-            Action<WebHostBuilderContext, IHealthBuilder> configureHealth)
+            Action<WebHostBuilderContext, IHealthBuilder> configureHealth,
+            DependencyContext dependencyContext = null)
         {
             if (_healthBuilt)
             {
@@ -33,7 +35,7 @@ namespace Microsoft.AspNetCore.Hosting
                 {
                     var healthBuilder = AppMetricsHealth.CreateDefaultBuilder();
                     configureHealth(context, healthBuilder);
-                    healthBuilder.HealthChecks.RegisterFromAssembly(services, Assembly.GetEntryAssembly().GetName().Name);
+                    healthBuilder.HealthChecks.RegisterFromAssembly(services, dependencyContext ?? GetDependencyContext());
                     healthBuilder.Configuration.ReadFrom(context.Configuration);
                     healthBuilder.BuildAndAddTo(services);
                     _healthBuilt = true;
@@ -94,7 +96,9 @@ namespace Microsoft.AspNetCore.Hosting
             return hostBuilder;
         }
 
-        public static IWebHostBuilder ConfigureHealth(this IWebHostBuilder hostBuilder)
+        public static IWebHostBuilder ConfigureHealth(
+            this IWebHostBuilder hostBuilder,
+            DependencyContext dependencyContext = null)
         {
             if (_healthBuilt)
             {
@@ -108,12 +112,17 @@ namespace Microsoft.AspNetCore.Hosting
                     {
                         AppMetricsHealth.CreateDefaultBuilder()
                             .Configuration.ReadFrom(context.Configuration)
-                            .HealthChecks.RegisterFromAssembly(services, Assembly.GetEntryAssembly().GetName().Name)
+                            .HealthChecks.RegisterFromAssembly(services, dependencyContext ?? GetDependencyContext())
                             .BuildAndAddTo(services);
 
                         _healthBuilt = true;
                     }
                 });
+        }
+
+        internal static DependencyContext GetDependencyContext()
+        {
+            return Assembly.GetEntryAssembly() != null ? DependencyContext.Default : null;
         }
     }
 }

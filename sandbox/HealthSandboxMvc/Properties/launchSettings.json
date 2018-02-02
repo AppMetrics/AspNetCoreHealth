@@ -1,24 +1,8 @@
 ﻿{
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:2222/",
-      "sslPort": 0
-    }
-  },
   "profiles": {
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "launchUrl": "health",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
-    "App.Metrics.Sandbox": {
+    "HealthSandboxMvc": {
       "commandName": "Project",
-      "launchBrowser": false,
+      "launchBrowser": true,
       "launchUrl": "health",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

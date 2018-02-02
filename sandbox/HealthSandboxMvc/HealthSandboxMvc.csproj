@@ -20,6 +20,7 @@
   </ItemGroup> 
   <ItemGroup>
     <ProjectReference Include="..\..\src\App.Metrics.AspNetCore.Health\App.Metrics.AspNetCore.Health.csproj" />
+    <ProjectReference Include="..\AdditionalChecks\AdditionalChecks.csproj" />
   </ItemGroup>
   
   <ItemGroup>

@@ -24,7 +24,7 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.DependencyInjection
             var provider = SetupServicesAndConfiguration();
             Action resolveEndpointsOptions = () => { endpointOptions = provider.GetRequiredService<IOptions<HealthEndpointsOptions>>().Value; };
 
-            resolveEndpointsOptions.ShouldNotThrow();
+            resolveEndpointsOptions.Should().NotThrow();
 
             endpointOptions.HealthEndpointEnabled.Should().Be(false);
         }
@@ -42,7 +42,7 @@ namespace App.Metrics.AspNetCore.Health.Integration.Facts.DependencyInjection
 
             Action resolveOptions = () => { options = provider.GetRequiredService<IOptions<HealthEndpointsOptions>>().Value; };
 
-            resolveOptions.ShouldNotThrow();
+            resolveOptions.Should().NotThrow();
             options.HealthEndpointEnabled.Should().Be(true);
             options.PingEndpointEnabled.Should().Be(false);
             options.Timeout.Should().Be(TimeSpan.FromDays(1));

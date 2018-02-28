@@ -19,6 +19,14 @@ namespace HealthSandboxMvc
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            // To configure App Metrics Health Host options in Startup
+            // services.TryAddEnumerable(ServiceDescriptor.Singleton<IConfigureOptions<HealthEndpointsHostingOptions>, ConfigureHealthHostingOptions>());
         }
+        
+        // To configure App Metrics Health Host options using IConfigureOptions in Startup
+        // public class ConfigureHealthHostingOptions : IConfigureOptions<HealthEndpointsHostingOptions>
+        // {
+        //     public void Configure(HealthEndpointsHostingOptions options) { options.HealthEndpoint = "/ucstom_health_check_url"; }
+        // }
     }
 }

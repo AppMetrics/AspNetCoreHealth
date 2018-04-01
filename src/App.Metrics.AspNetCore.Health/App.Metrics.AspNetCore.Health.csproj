@@ -1,7 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="..\..\build\common.props" />
-  
   <PropertyGroup>
     <Description>App Metrics ASP.NET Core Health provides health checking capabilities to web applications and allows you to expose health check results over HTTP.</Description>
     <TargetFramework>netstandard2.0</TargetFramework>

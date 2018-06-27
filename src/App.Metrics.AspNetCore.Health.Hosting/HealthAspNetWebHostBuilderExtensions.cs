@@ -42,6 +42,28 @@ namespace Microsoft.AspNetCore.Hosting
                 });
         }
 
+        public static IWebHostBuilder ConfigureHealthWithDefaults(
+            this IWebHostBuilder hostBuilder,
+            Action<WebHostBuilderContext, IServiceCollection, IHealthBuilder> configureHealth,
+            DependencyContext dependencyContext = null)
+        {
+            if (_healthBuilt)
+            {
+                throw new InvalidOperationException("HealthBuilder allows creation only of a single instance of IMetrics");
+            }
+
+            return hostBuilder.ConfigureServices(
+                (context, services) =>
+                {
+                    var healthBuilder = AppMetricsHealth.CreateDefaultBuilder();
+                    configureHealth(context, services, healthBuilder);
+                    healthBuilder.HealthChecks.RegisterFromAssembly(services, dependencyContext ?? GetDependencyContext());
+                    healthBuilder.Configuration.ReadFrom(context.Configuration);
+                    healthBuilder.BuildAndAddTo(services);
+                    _healthBuilt = true;
+                });
+        }
+
         public static IWebHostBuilder ConfigureHealthWithDefaults(this IWebHostBuilder hostBuilder, Action<IHealthBuilder> configureHealth)
         {
             if (_healthBuilt)
@@ -74,6 +96,28 @@ namespace Microsoft.AspNetCore.Hosting
                         healthBuilder =>
                         {
                             configureHealth(context, healthBuilder);
+                            healthBuilder.Configuration.ReadFrom(context.Configuration);
+                            _healthBuilt = true;
+                        });
+                });
+        }
+
+        public static IWebHostBuilder ConfigureHealth(
+            this IWebHostBuilder hostBuilder,
+            Action<WebHostBuilderContext, IServiceCollection, IHealthBuilder> configureHealth)
+        {
+            if (_healthBuilt)
+            {
+                throw new InvalidOperationException("HealthBuilder allows creation only of a single instance of IHealth");
+            }
+
+            return hostBuilder.ConfigureServices(
+                (context, services) =>
+                {
+                    services.AddHealth(
+                        healthBuilder =>
+                        {
+                            configureHealth(context, services, healthBuilder);
                             healthBuilder.Configuration.ReadFrom(context.Configuration);
                             _healthBuilt = true;
                         });

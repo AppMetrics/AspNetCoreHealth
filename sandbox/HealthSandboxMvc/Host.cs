@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using System.Threading.Tasks;
 using App.Metrics.AspNetCore.Health;
 using App.Metrics.Health;
 using App.Metrics.Health.Formatters.Ascii;
@@ -72,6 +73,8 @@ namespace HealthSandboxMvc
                            builder.HealthChecks.AddProcessPhysicalMemoryCheck("Working Set", 200);
                            builder.HealthChecks.AddPingCheck("google ping", "google.com", TimeSpan.FromSeconds(10));
                            builder.HealthChecks.AddHttpGetCheck("github", new Uri("https://github.com/"), TimeSpan.FromSeconds(10));
+                           builder.HealthChecks.AddCheck("Degraded Test", () => new ValueTask<HealthCheckResult>(HealthCheckResult.Degraded()));
+                           builder.Report.Using<SlackIncomingWebHookHealthAlert>();
                        })
                     .UseHealth()
                     .UseStartup<Startup>()

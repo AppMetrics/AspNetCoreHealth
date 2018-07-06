@@ -13,6 +13,8 @@
     <PackageReference Include="App.Metrics.Health.Checks.Http" Version="$(AppMetricsHealthVersion)" />
     <PackageReference Include="App.Metrics.Health.Checks.Network" Version="$(AppMetricsHealthVersion)" />
     <PackageReference Include="App.Metrics.Health.Checks.Process" Version="$(AppMetricsHealthVersion)" />
+    <PackageReference Include="App.Metrics.Health.Reporting.Metrics" Version="$(AppMetricsHealthVersion)" />
+    <PackageReference Include="App.Metrics.Health.Reporting.Slack" Version="$(AppMetricsHealthVersion)" />
     <PackageReference Include="Microsoft.AspNetCore" Version="$(AspNetCoreVersion)" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="$(AspNetCoreMvcVersion)" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="$(MicrosoftExtensionsVersion)" />

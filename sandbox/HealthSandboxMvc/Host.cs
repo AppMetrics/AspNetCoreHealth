@@ -6,8 +6,10 @@ using System;
 using App.Metrics.AspNetCore.Health;
 using App.Metrics.Health;
 using App.Metrics.Health.Formatters.Ascii;
+using App.Metrics.Health.Reporting.Slack;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Serilog;
 using Serilog.Events;
 
@@ -65,13 +67,17 @@ namespace HealthSandboxMvc
                    #endregion
 
                    .ConfigureHealthWithDefaults(
-                       builder =>
+                       (context, builder) =>
                        {
+                           var slackOptions = new SlackHealthAlertOptions();
+                           context.Configuration.GetSection(nameof(SlackHealthAlertOptions)).Bind(slackOptions);
+
                            builder.HealthChecks.AddProcessPrivateMemorySizeCheck("Private Memory Size", 200);
                            builder.HealthChecks.AddProcessVirtualMemorySizeCheck("Virtual Memory Size", 200);
                            builder.HealthChecks.AddProcessPhysicalMemoryCheck("Working Set", 200);
                            builder.HealthChecks.AddPingCheck("google ping", "google.com", TimeSpan.FromSeconds(10));
                            builder.HealthChecks.AddHttpGetCheck("github", new Uri("https://github.com/"), TimeSpan.FromSeconds(10));
+                           builder.Report.ToSlack(slackOptions); // TODO: Edit webhook url in appsettings
                        })
                     .UseHealth()
                     .UseStartup<Startup>()

@@ -24,6 +24,7 @@ namespace App.Metrics.AspNetCore.Health
             hostBuilder.ConfigureServices(
                 (context, services) =>
                 {
+                    services.AddHealthReportingHostedService();
                     services.AddHealthEndpoints(context.Configuration);
                 });
 
@@ -53,6 +54,7 @@ namespace App.Metrics.AspNetCore.Health
                 {
                     optionsDelegate(options);
 
+                    services.AddHealthReportingHostedService(options.UnobservedTaskExceptionHandler);
                     services.AddHealthEndpoints(options.EndpointOptions);
                 });
 
@@ -82,6 +84,7 @@ namespace App.Metrics.AspNetCore.Health
                 {
                     optionsDelegate(context, options);
 
+                    services.AddHealthReportingHostedService(options.UnobservedTaskExceptionHandler);
                     services.AddHealthEndpoints(options.EndpointOptions, context.Configuration);
                 });
 
@@ -112,6 +115,7 @@ namespace App.Metrics.AspNetCore.Health
                 {
                     optionsDelegate(options);
 
+                    services.AddHealthReportingHostedService(options.UnobservedTaskExceptionHandler);
                     services.AddHealthEndpoints(options.EndpointOptions, context.Configuration);
                     services.AddSingleton<IStartupFilter>(new TStartup());
                 });
@@ -135,6 +139,7 @@ namespace App.Metrics.AspNetCore.Health
             hostBuilder.ConfigureServices(
                 (context, services) =>
                 {
+                    services.AddHealthReportingHostedService();
                     services.AddHealthEndpoints(context.Configuration);
                     services.AddSingleton<IStartupFilter>(new TStartup());
                 });

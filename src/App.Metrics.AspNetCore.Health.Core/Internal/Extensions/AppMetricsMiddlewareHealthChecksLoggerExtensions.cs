@@ -33,6 +33,14 @@ namespace Microsoft.Extensions.Logging
             }
         }
 
+        public static void MiddlewareAuthorizationInvalid<TMiddleware>(this ILogger logger)
+        {
+          if (logger.IsEnabled(LogLevel.Trace))
+          {
+            logger.LogTrace(AppMetricsEventIds.Middleware.MiddlewareAuthorizationInvalidId, $"Invalid authorization App Metrics Health Middleware {typeof(TMiddleware).FullName}");
+          }
+        }
+
         private static class AppMetricsEventIds
         {
             public static class Middleware
@@ -40,6 +48,7 @@ namespace Microsoft.Extensions.Logging
                 public const int MiddlewareExecutedId = 1;
                 public const int MiddlewareExecutingId = 2;
                 public const int MiddlewareErrorId = 3;
+                public const int MiddlewareAuthorizationInvalidId = 4;
             }
         }
     }

@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using App.Metrics.AspNetCore.Health;
 using App.Metrics.AspNetCore.Health.Endpoints;
 using App.Metrics.AspNetCore.Health.Endpoints.Middleware;
 using App.Metrics.Health;
@@ -112,7 +113,8 @@ namespace Microsoft.AspNetCore.Builder
                 appBuilder =>
                 {
                     var responseWriter = HealthAspNetCoreHealthEndpointsServiceCollectionExtensions.ResolveHealthResponseWriter(app.ApplicationServices, formatter);
-                    appBuilder.UseMiddleware<HealthCheckEndpointMiddleware>(responseWriter, endpointsOptionsAccessor.Value.Timeout);
+                    var healthAuthorizationFilter = app.ApplicationServices.GetService<IHealthAuthorizationFilter>() ?? new AuthorizedHealthAuthorizationFilter();
+                    appBuilder.UseMiddleware<HealthCheckEndpointMiddleware>(responseWriter, endpointsOptionsAccessor.Value.Timeout, healthAuthorizationFilter);
                 });
         }
     }

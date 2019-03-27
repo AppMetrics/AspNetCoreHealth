@@ -19,6 +19,7 @@ namespace App.Metrics.AspNetCore.Health.Endpoints.Middleware
     {
         private readonly IRunHealthChecks _healthCheckRunner;
         private readonly IHealthResponseWriter _healthResponseWriter;
+        private readonly IHealthAuthorizationFilter _healthAuthorizationFilter;
         private readonly ILogger<HealthCheckEndpointMiddleware> _logger;
         private readonly TimeSpan _timeout;
 
@@ -28,12 +29,14 @@ namespace App.Metrics.AspNetCore.Health.Endpoints.Middleware
             ILoggerFactory loggerFactory,
             IRunHealthChecks healthCheckRunner,
             IHealthResponseWriter healthResponseWriter,
+            IHealthAuthorizationFilter healthAuthorizationFilter,
             TimeSpan timeout)
             // ReSharper restore UnusedParameter.Local
         {
             _healthCheckRunner = healthCheckRunner;
             _logger = loggerFactory.CreateLogger<HealthCheckEndpointMiddleware>();
             _healthResponseWriter = healthResponseWriter ?? throw new ArgumentNullException(nameof(healthResponseWriter));
+            _healthAuthorizationFilter = healthAuthorizationFilter ?? new AuthorizedHealthAuthorizationFilter();
             _timeout = timeout <= TimeSpan.Zero ? TimeSpan.FromSeconds(20) : timeout;
         }
 
@@ -49,9 +52,18 @@ namespace App.Metrics.AspNetCore.Health.Endpoints.Middleware
             {
                 try
                 {
+                  if (!_healthAuthorizationFilter.Authorized(context))
+                  {
+                    _logger.MiddlewareAuthorizationInvalid<HealthCheckEndpointMiddleware>();
+                    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                    await context.Response.WriteAsync("Invalid authorization.", cancellationToken: cancellationTokenSource.Token);
+                  }
+                  else
+                  {
                     var healthStatus = await _healthCheckRunner.ReadAsync(cancellationTokenSource.Token);
 
                     await _healthResponseWriter.WriteAsync(context, healthStatus, cancellationTokenSource.Token);
+                  }
                 }
                 catch (OperationCanceledException e)
                 {
